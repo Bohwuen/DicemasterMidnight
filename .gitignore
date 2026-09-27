@@ -1,8 +1,12 @@
 ﻿# Ignorar absolutamente todo en la raiz
 /*
 
-# Excepto estas cuatro cosas
+# Excepto los archivos y carpetas que si queremos versionar
 !/.gitignore
+!/.gitattributes
 !/README.md
 !/DiceMaster/
 !/DiceMaster_Resources/
+
+# VS Code workspace settings (personal)
+/.vscode/
