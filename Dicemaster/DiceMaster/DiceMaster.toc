@@ -62,9 +62,6 @@ UnitFrames/Lists/SoundList.lua
 UnitFrames/Pickers/AnimationPicker.lua
 UnitFrames/Pickers/SoundPicker.lua
 UnitFrames/Pickers/UnitPicker.lua
-Resources/DiceMaster_Resources.lua
-Resources/Lists/SoundList.lua
-Resources/Lists/ModelList.lua
 Ui/UnitFrames/TalkingHead.lua
 ChatLinks.lua
 Names.lua
