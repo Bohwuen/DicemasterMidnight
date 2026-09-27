@@ -1,0 +1,20 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
+
+  <!-- Widgets -->
+  <Include file="Ui\UnitFrames\Widgets\UnitFrame.xml"/>
+
+  <!-- Editors -->
+  <Include file="Ui\UnitFrames\Editors\AffixEditor.xml"/>
+  <Include file="Ui\UnitFrames\Editors\BuffEditor.xml"/>
+    <!-- e file="Ui\UnitFrames\Editors\SoundEditor.xml"/>-->
+
+  <!-- Pickers -->
+  <Include file="Ui\UnitFrames\Pickers\AnimationPicker.xml"/>
+  <Include file="Ui\UnitFrames\Pickers\SoundPicker.xml"/>
+  <Include file="Ui\UnitFrames\Pickers\UnitPicker.xml"/>
+
+  <!-- Frames -->
+  <Include file="Ui\UnitFrames\Panels.xml"/>
+  <Include file="Ui\UnitFrames\TalkingHead.xml"/>
+</Ui>
+ 

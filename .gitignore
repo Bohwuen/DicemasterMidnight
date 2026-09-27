@@ -1,0 +1,8 @@
+﻿# Ignorar absolutamente todo en la raiz
+/*
+
+# Excepto estas cuatro cosas
+!/.gitignore
+!/README.md
+!/DiceMaster/
+!/DiceMaster_Resources/
