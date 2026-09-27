@@ -11,5 +11,3 @@
 DiceMaster_Resources.lua
 Lists/SoundList.lua
 Lists/ModelList.lua
-
-## Test: flujo Git OK
