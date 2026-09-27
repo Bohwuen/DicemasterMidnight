@@ -52,6 +52,9 @@ Editors/SecretEditor.lua
 Editors/RecipeEditor.lua
 Editors/MerchantEditor.lua
 Editors/Book.lua
+Resources/DiceMaster_Resources.lua
+Resources/Lists/SoundList.lua
+Resources/Lists/ModelList.lua
 # --- Módulo UnitFrames (integrado) ---
 UnitFrames/DiceMaster_UnitFrames.lua
 UnitFrames/Comm.lua
@@ -62,9 +65,6 @@ UnitFrames/Lists/SoundList.lua
 UnitFrames/Pickers/AnimationPicker.lua
 UnitFrames/Pickers/SoundPicker.lua
 UnitFrames/Pickers/UnitPicker.lua
-Resources/DiceMaster_Resources.lua
-Resources/Lists/SoundList.lua
-Resources/Lists/ModelList.lua
 Ui/UnitFrames/TalkingHead.lua
 ChatLinks.lua
 Names.lua
