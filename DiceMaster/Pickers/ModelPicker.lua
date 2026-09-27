@@ -270,19 +270,14 @@ end
 --
 function Me.ModelPicker_Open( frame, model )
 
-	-- Load the DiceMaster_Resources module needed to access the model list.
-	local loaded, reason = C_AddOns.LoadAddOn("DiceMaster_Resources")
-	if not loaded then
-		if reason == "DISABLED" then
-			C_AddOns.EnableAddOn("DiceMaster_Resources")
-			C_AddOns.LoadAddOn("DiceMaster_Resources")
-		else
-			local failed_msg = format("%s - %s", reason, _G["ADDON_"..reason])
-			error(ADDON_LOAD_FAILED:format("DiceMaster_Resources", failed_msg))
-		end
+	-- >>> PORT 5.2.1 — DiceMaster_Resources fusionado en el core.
+	-- Los archivos SoundList.lua y ModelList.lua se cargan desde DiceMaster.toc.
+	-- Ya no es un addon independiente: solo verificamos que las listas estén listas.
+	if not Me.modelList then
+		Me.PrintMessage("|cFFFF0000DiceMaster:|r modelList no disponible. Revisa Resources/Lists/ModelList.lua.", "SYSTEM")
+		return
 	end
-	-- Failsafe
-	if not( C_AddOns.IsAddOnLoaded("DiceMaster_Resources")) then return end
+	-- <<< PORT 5.2.1
 
 	Me.CloseAllEditors( nil, true, nil )
 	DiceMasterModelPicker:ClearAllPoints()
