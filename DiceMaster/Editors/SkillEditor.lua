@@ -471,9 +471,13 @@ function Me.SkillEditor_SaveEdits()
 	skill.skillModifiers = {};
 	skill.canEdit = canEdit;
 
-	if skill.maxRank > skill.rank then
+	-- >>> PORT 5.2.1 — clamp correcto: el rank nunca debe superar maxRank.
+	-- El código anterior (if skill.maxRank > skill.rank then skill.rank = skill.maxRank end)
+	-- subía el rank al máximo cada vez que se guardaba. Corregido.
+	if skill.rank and skill.maxRank and skill.rank > skill.maxRank then
 		skill.rank = skill.maxRank
 	end
+	-- <<< PORT 5.2.1
 
 	for i = 1, #SkillEditorModifiers do
 		tinsert( skill.skillModifiers, SkillEditorModifiers[i])
