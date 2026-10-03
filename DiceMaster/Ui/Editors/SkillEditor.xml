@@ -124,7 +124,7 @@
 			</Scripts>
 	    </Button>
 		
-		<Button name="$parentSkillModifiers" parentKey="SkillModifiers" enableMouse="true" inherits="UIDropDownMenuTemplate">
+		<Button name="$parentskillModifiers" parentKey="skillModifiers" enableMouse="true" inherits="UIDropDownMenuTemplate">
 			<Size x="210" y="22"/>
 			<Anchors>
 			  <Anchor point="TOPLEFT" relativeKey="$parent.SkillType" relativePoint="BOTTOMLEFT" x="0" y="0"/> 
@@ -180,7 +180,7 @@
 		
 		<CheckButton name="$parentEditable" parentKey="Editable" inherits="ChatConfigCheckButtonTemplate">
 			<Anchors>
-			  <Anchor point="TOPLEFT" relativeKey="$parent.SkillModifiers" relativePoint="BOTTOMLEFT" x="12" y="-28" />
+			  <Anchor point="TOPLEFT" relativeKey="$parent.skillModifiers" relativePoint="BOTTOMLEFT" x="12" y="-28" />
 			</Anchors>
 			
 			<Scripts>

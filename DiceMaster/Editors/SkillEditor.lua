@@ -90,7 +90,7 @@ local function GetModifiersTotalFromSkillIndex( skillIndex )
 	local modifiersTotal = 0;	
 	for s = 1, #Me.Profile.skills do
 		for m = 1, #Me.Profile.skills[skillIndex].skillModifiers do
-			if Me.Profile.skills[s].guid == Me.Profile.skillModifiers[m] then
+			if Me.Profile.skills[s].guid == Me.Profile.skills[skillIndex].skillModifiers[m] then
 				modifiersTotal = modifiersTotal + Me.Profile.skills[s].rank;
 			end
 		end
@@ -204,7 +204,7 @@ function Me.SkillEditorModifiers_OnClick(self, arg1, arg2, checked)
 			modifiersList = modifiersList .. ", ".. GetSkillNameFromGUID( SkillEditorModifiers[i] );
 		end
 	end
-	UIDropDownMenu_SetText( DiceMasterSkillEditor.SkillModifiers, "|cFFFFD100Skill Modifiers:|r " .. modifiersList )
+	UIDropDownMenu_SetText( DiceMasterSkillEditor.skillModifiers, "|cFFFFD100Skill Modifiers:|r " .. modifiersList )
 end
 
 function Me.SkillEditorModifiers_OnLoad(frame, level, menuList)
@@ -257,8 +257,9 @@ function Me.SkillEditorModifiers_OnLoad(frame, level, menuList)
 			end
 			info.tooltipOnButton = true;
 			info.checked = false;
-			for i = 1,#SkillEditorModifiers do
-				if SkillEditorModifiers[i] == info.arg1 then
+-- >>> PORT 5.2.1 — variable 'j' en lugar de reusar 'i' (rompía el bucle exterior).
+			for j = 1, #SkillEditorModifiers do
+				if SkillEditorModifiers[j] == info.arg1 then
 					info.checked = true;
 					break;
 				end
@@ -356,7 +357,7 @@ function Me.SkillEditor_ClearAllFields()
 	editor.Name:SetText( "" )
 	editor.Desc.EditBox:SetText( "" )
 	UIDropDownMenu_SetText( editor.SkillType, "|cFFFFD100Skill Category:|r Miscellaneous" )
-	UIDropDownMenu_SetText( editor.SkillModifiers, "|cFFFFD100Skill Modifiers:|r (Ninguno)" )
+	UIDropDownMenu_SetText( editor.skillModifiers, "|cFFFFD100Skill Modifiers:|r (Ninguno)" )
 	SkillEditorModifiers = {};
 	editor.MaxRank:SetText( 100 )
 	editor.Editable:SetChecked( false );
@@ -418,7 +419,7 @@ function Me.SkillEditor_Edit()
 			end
 		end
 	end
-	UIDropDownMenu_SetText( editor.SkillModifiers, "|cFFFFD100Skill Modifiers:|r " .. modifiersList )
+	UIDropDownMenu_SetText( editor.skillModifiers, "|cFFFFD100Skill Modifiers:|r " .. modifiersList )
 	SkillEditorModifiers = skill.skillModifiers;
 
 	editor.MaxRank:SetText( skill.maxRank or 100 )
@@ -730,7 +731,7 @@ function Me.LearnSkillEditor_Save()
 		guid = skill.guid;
 		rank = rank;
 		maxRank = skill.maxRank or 0;
-		skillModifiers = skill.SkillModifiers or {};
+		skillModifiers = skill.skillModifiers or {};
 		author = skill.author;
 		expanded = skill.expanded;
 		showOnMenu = skill.showOnMenu;
