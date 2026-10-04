@@ -380,4 +380,85 @@ L["- Z is how much you add/subtract from the total after adding up all the dice.
 L["Roll"]                    = "Tirar"
 L["An attempt"]              = "Un intento"
 L["Unknown Item"]            = "Objeto desconocido"
-L["Unknown Trait"] = "Rasgo desconocido"
+L["Unknown Trait"]           = "Rasgo desconocido"
+
+-- ============================================================================
+-- RollTracker.lua — World Marker names
+-- ============================================================================
+L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:14:14|t |cffffff00Gold|r World Marker"]   = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:14:14|t |cffffff00Oro|r Marcador de mundo"
+L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:14:14|t |cffff7f3fOrange|r World Marker"] = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:14:14|t |cffff7f3fNaranja|r Marcador de mundo"
+L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:14:14|t |cffa335eePurple|r World Marker"] = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:14:14|t |cffa335eeMorado|r Marcador de mundo"
+L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_4:14:14|t |cff1eff00Green|r World Marker"]  = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_4:14:14|t |cff1eff00Verde|r Marcador de mundo"
+L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:14:14|t |cffaaaaddSilver|r World Marker"] = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:14:14|t |cffaaaaddPlata|r Marcador de mundo"
+L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:14:14|t |cff0070ddBlue|r World Marker"]   = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:14:14|t |cff0070ddAzul|r Marcador de mundo"
+L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:14:14|t |cffff2020Red|r World Marker"]    = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:14:14|t |cffff2020Rojo|r Marcador de mundo"
+L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:14:14|t |cffffffffWhite|r World Marker"]  = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:14:14|t |cffffffffBlanco|r Marcador de mundo"
+
+-- ============================================================================
+-- Shared — Popup buttons (YES/NO)
+-- ============================================================================
+L["Yes"] = "Sí"
+L["No"]  = "No"
+
+-- ============================================================================
+-- RollTracker.lua — StaticPopups
+-- ============================================================================
+L["Do you want to clear the notes field?"]                                                        = "¿Quieres borrar el campo de notas?"
+L["Experience Amount:"]                                                                           = "Cantidad de experiencia:"
+L["Level Amount:"]                                                                                = "Cantidad de niveles:"
+L["Do you want to reset levels to 1? Players will lose all experience gained so far.|n|nType \"RESET\" into the field to confirm."] = "¿Quieres reiniciar los niveles a 1? Los jugadores perderán toda la experiencia obtenida hasta ahora.|n|nEscribe \"RESET\" en el campo para confirmar."
+L["Invalid amount."]                                                                              = "Cantidad no válida."
+L["Player not found."]                                                                            = "Jugador no encontrado."
+
+-- ============================================================================
+-- RollTracker.lua — Frame titles and texts
+-- ============================================================================
+L["Dungeon Manager"]  = "Pantalla de Narrador"
+L["No Recent Rolls"]  = "Sin tiradas recientes"
+L["XP: 0/100"]        = "EX: 0/100"
+L["XP: %d/100"]       = "EX: %d/100"
+L["No Map Nodes"]     = "Sin nodos de mapa"
+
+-- ============================================================================
+-- RollTracker.lua — Dropdowns
+-- ============================================================================
+L["|cFFffd100Select a Target:"]  = "|cFFffd100Selecciona un objetivo:"
+L["No World Marker"]             = "Sin marcador de mundo"
+
+
+-- ============================================================================
+-- RollTracker.lua — PrintMessage
+-- ============================================================================
+L["%s has been deleted."]                        = "%s se ha eliminado."
+L["New Map Node has been added to your map."]    = "Se ha añadido un nuevo nodo de mapa a tu mapa."
+L["%s has been saved."]                          = "%s se ha guardado."
+
+-- ============================================================================
+-- RollBanner.lua — Timer intervals
+-- ============================================================================
+L["1 Minute"]   = "1 minuto"
+L["2 Minutes"]  = "2 minutos"
+L["3 Minutes"]  = "3 minutos"
+L["5 Minutes"]  = "5 minutos"
+L["10 Minutes"] = "10 minutos"
+L["15 Minutes"] = "15 minutos"
+L["30 Minutes"] = "30 minutos"
+L["45 Minutes"] = "45 minutos"
+L["1 Hour"]     = "1 hora"
+
+-- ============================================================================
+-- RollBanner.lua — Option placeholders
+-- ============================================================================
+L["Title"]       = "Título"
+L["Description"] = "Descripción"
+
+-- ============================================================================
+-- RollBanner.lua — UIErrorsFrame
+-- ============================================================================
+L["A banner is already playing."]     = "Ya se está reproduciendo un banner."
+L["Enter a title for this banner."]   = "Introduce un título para este banner."
+
+-- ============================================================================
+-- RollBanner.lua — Turn tracker
+-- ============================================================================
+L["Round %d"] = "Ronda %d"

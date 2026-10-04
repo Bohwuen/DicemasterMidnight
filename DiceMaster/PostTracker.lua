@@ -9,12 +9,42 @@
 local Me = DiceMaster4
 Me.WhoIsTyping = {}
 
-local trackTypes = {
-	["Say: "] = true,
-	["Party: "] = true,
-	["Raid: "] = true,
-	[UnitName("player").." "] = true,
-}
+-- local trackTypes = {
+-- 	[ChatTypeInfo["SAY"].name   .. ": "] = true,
+-- 	[ChatTypeInfo["PARTY"].name .. ": "] = true,
+-- 	[ChatTypeInfo["RAID"].name  .. ": "] = true,
+-- 	[UnitName("player").." "]            = true,
+-- }
+
+-- (elimina el bloque local trackTypes = { ... } de la parte superior)
+
+-- Normaliza un header de chat quitando color, corchetes, "%s" y ": "
+-- para poder comparar CHAT_*_GET (plantillas localizadas de Blizzard)
+-- con el texto plano que aparece en el editbox.
+local function NormalizeHeader( s )
+	if not s then return nil end
+	s = s:gsub("|c%x%x%x%x%x%x%x%x", "")   -- quita color |cFF...
+	s = s:gsub("|r", "")                    -- quita cierre de color
+	s = s:gsub("%[", ""):gsub("%]", "")     -- quita corchetes
+	s = s:gsub("%%s", "")                   -- quita placeholder %s
+	s = s:gsub("%s+", " ")                  -- colapsa espacios
+	s = s:gsub("^%s+", ""):gsub("%s+$", "") -- recorta extremos
+	s = s:gsub(":$", "")                    -- quita ":" final si lo hubiera
+	return s
+end
+
+local function IsTrackedChatType( header )
+	local h = NormalizeHeader( header )
+	local function matches( get )
+		local n = _G[get]
+		if not n then return false end
+		return h == NormalizeHeader( n )
+	end
+	return matches("CHAT_SAY_GET")
+	    or matches("CHAT_PARTY_GET")
+	    or matches("CHAT_RAID_GET")
+	    or header == UnitName("player") .. " "
+end
 
 function Me.PostTracker_SendUpdate( typing )
 	local data = {}
@@ -30,19 +60,20 @@ function Me.PostTracker_Typing( self )
 	local chatType = _G[self:GetName() .. "Header"]:GetText()
 	local msg = self:GetText()
 	if string.len(msg) > 0 and not msg:match("^%/%.*") then 
+		-- print("|cffff0000[PT-SEND]|r header:", chatType, "| tracked:", tostring(IsTrackedChatType(chatType)), "| CHAT_PARTY_GET:", tostring(CHAT_PARTY_GET), "| focus:", tostring(self:HasFocus()), "| msg:", tostring(msg))
 		msg = true
 	else 
 		msg = false 
 	end
-	
+
 	if DiceMasterPostTrackerButton.isTyping then
 		self.Typing = true;
 		Me.PostTracker_SendUpdate( self.Typing )
 		return
 	end
 	
-	if msg and trackTypes[chatType] and self:HasFocus() then
-		if not self.Typing then
+if msg and IsTrackedChatType(chatType) and self:HasFocus() then
+			if not self.Typing then
 			self.Typing = true;
 			Me.PostTracker_SendUpdate( self.Typing )
 		end
@@ -65,11 +96,14 @@ function Me.PostTracker_Init()
 		DiceMasterPostTrackerButton.alert.flash:Stop()
 		DiceMasterPostTrackerButton:Hide()
 		
-		Me.PostTracker_SendUpdate( false )
+
 	else
 		DiceMasterPostTrackerButton:Show()
 	end
+			Me.PostTracker_SendUpdate( false )
 end
+
+
 
 function Me.PostTracker_OnClick( self, button )
 	self.isTyping = not self.isTyping
@@ -142,11 +176,11 @@ end
 
 function Me.PostTracker_OnTyping( data, dist, sender )	
 	-- Ignore our own data.
+	-- print("|cff00ff00[PT-RECV]|r sender:", tostring(sender), "| data.na:", tostring(data and data.na), "| data.tp:", tostring(data and data.tp))
 	if sender == UnitName( "player" )  then return end
  
 	-- sanitize message
-	if not data.na or not Me.db.global.hideTypeTracker then
-	   
+	if not data.na then
 		return
 	end
 	

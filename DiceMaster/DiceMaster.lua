@@ -29,10 +29,11 @@ setmetatable( Me.Profile, {
 })
 
 local Profile = Me.Profile
-local L = LibStub("AceLocale-3.0"):GetLocale("DiceMaster", true)
 local EditModeExpanded = LibStub:GetLibrary("EditModeExpanded-1.0")
 Me.EditModeFrames = {};
 
+-- >>> l10n esES — Locale global. Todos los archivos del addon usan `L[...]`.
+L = LibStub("AceLocale-3.0"):GetLocale("DiceMaster", true)
 -------------------------------------------------------------------------------
 -- Constants/Options
 --

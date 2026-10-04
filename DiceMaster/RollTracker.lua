@@ -21,15 +21,16 @@ if not Me.SavedRolls then
 end
 Me.HistoryRolls = {}
 
+-- >>> l10n esES
 local WORLD_MARKER_NAMES = {
-	"|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:14:14|t |cffffff00Gold|r World Marker"; -- [1]
-	"|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:14:14|t |cffff7f3fOrange|r World Marker"; -- [2]
-	"|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:14:14|t |cffa335eePurple|r World Marker"; -- [3]
-	"|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_4:14:14|t |cff1eff00Green|r World Marker"; -- [4]
-	"|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:14:14|t |cffaaaaddSilver|r World Marker"; -- [5]
-	"|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:14:14|t |cff0070ddBlue|r World Marker"; -- [6]
-	"|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:14:14|t |cffff2020Red|r World Marker"; -- [7]
-	"|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:14:14|t |cffffffffWhite|r World Marker"; -- [8]
+	L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:14:14|t |cffffff00Gold|r World Marker"]; -- [1]
+	L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:14:14|t |cffff7f3fOrange|r World Marker"]; -- [2]
+	L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:14:14|t |cffa335eePurple|r World Marker"]; -- [3]
+	L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_4:14:14|t |cff1eff00Green|r World Marker"]; -- [4]
+	L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:14:14|t |cffaaaaddSilver|r World Marker"]; -- [5]
+	L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:14:14|t |cff0070ddBlue|r World Marker"]; -- [6]
+	L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:14:14|t |cffff2020Red|r World Marker"]; -- [7]
+	L["|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:14:14|t |cffffffffWhite|r World Marker"]; -- [8]
 }
 
 local MAP_NODE_ICONS = {
@@ -618,9 +619,9 @@ local MAP_NODE_ICONS = {
 }
 
 StaticPopupDialogs["DICEMASTER4_CLEARNOTES"] = {
-  text = "Do you want to clear the notes field?",
-  button1 = "Yes",
-  button2 = "No",
+  text = L["Do you want to clear the notes field?"],
+  button1 = L["Yes"],
+  button2 = L["No"],
   OnAccept = function (self, data)
 	if Me.IsLeader() then
 		DiceMasterDMNotesDMNotes.EditBox:SetText("")
@@ -634,7 +635,7 @@ StaticPopupDialogs["DICEMASTER4_CLEARNOTES"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_GRANTEXPERIENCE"] = {
-  text = "Experience Amount:",
+  text = L["Experience Amount:"],
   button1 = "ACCEPT",
   button2 = "CANCEL",
   OnShow = function (self, data)
@@ -644,7 +645,7 @@ StaticPopupDialogs["DICEMASTER4_GRANTEXPERIENCE"] = {
   OnAccept = function (self, data)
     local text = tonumber(self.EditBox:GetText()) or 0
 	if text == "" or ( tonumber(text) > 100 ) or text == 0 then
-		UIErrorsFrame:AddMessage( "Invalid amount.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Invalid amount."], 1.0, 0.0, 0.0 );
 	else
 		local msg = Me:Serialize( "EXP", {
 			v = tonumber( text );
@@ -656,7 +657,7 @@ StaticPopupDialogs["DICEMASTER4_GRANTEXPERIENCE"] = {
 			-- Grant all players experience.
 			Me:SendCommMessage( "DCM4", msg, "RAID", nil, "ALERT" )
 		else
-			UIErrorsFrame:AddMessage( "Player not found.", 1.0, 0.0, 0.0 );
+			UIErrorsFrame:AddMessage( L["Player not found."], 1.0, 0.0, 0.0 );
 		end
 	end
   end,
@@ -668,7 +669,7 @@ StaticPopupDialogs["DICEMASTER4_GRANTEXPERIENCE"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_GRANTLEVEL"] = {
-  text = "Level Amount:",
+  text = L["Level Amount:"],
   button1 = "ACCEPT",
   button2 = "CANCEL",
   OnShow = function (self, data)
@@ -702,9 +703,9 @@ StaticPopupDialogs["DICEMASTER4_GRANTLEVEL"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_LEVELRESETATTEMPT"] = {
-  text = "Do you want to reset levels to 1? Players will lose all experience gained so far.|n|nType \"RESET\" into the field to confirm.",
-  button1 = "Yes",
-  button2 = "No",
+  text = L["Do you want to reset levels to 1? Players will lose all experience gained so far.|n|nType \"RESET\" into the field to confirm."],
+  button1 = L["Yes"],
+  button2 = L["No"],
   OnShow = function (self, data)
     -- >>> PORT 5.2.1 — usar OnTextChanged en lugar de OnUpdate (más eficiente)
     self:GetButton(1):Disable()
@@ -757,7 +758,7 @@ function Me.DiceMasterRollFrame_OnLoad(self)
 	self:SetUserPlaced( true )
 	
 	self.PortraitContainer.portrait:SetTexture( "Interface/AddOns/DiceMaster/Texture/DungeonManagerIcon" )
-	self.TitleContainer.TitleText:SetText("Dungeon Manager")
+	self.TitleContainer.TitleText:SetText(L["Dungeon Manager"])
 	--self.Inset:SetPoint("TOPLEFT", 4, -80);
 	
 	for i = 2, 17 do
@@ -892,7 +893,7 @@ end
 function Me.RollTargetDropDown_OnLoad(frame, level, menuList)
 	local info = UIDropDownMenu_CreateInfo()
 	
-	info.text = "|cFFffd100Select a Target:"
+	info.text = L["|cFFffd100Select a Target:"]
 	info.notClickable = true;
 	info.notCheckable = true;
 	UIDropDownMenu_AddButton(info, level)
@@ -907,7 +908,7 @@ function Me.RollTargetDropDown_OnLoad(frame, level, menuList)
 	   UIDropDownMenu_AddButton(info, level)
 	end
 	
-	info.text = "No World Marker";
+	info.text = L["No World Marker"];
 	info.arg1 = 0;
 	info.notCheckable = true;
 	info.func = Me.RollTargetDropDown_OnClick;
@@ -1048,7 +1049,7 @@ function Me.DiceMasterRollFrame_Update()
 		DiceMasterRollTrackerTotals:Hide()
 	else
 		DiceMasterRollTrackerTotals:Show()
-		DiceMasterRollTrackerTotals:SetText("No Recent Rolls")
+		DiceMasterRollTrackerTotals:SetText(L["No Recent Rolls"])
 	end
 	
 	if DiceMasterRollTracker.selected then
@@ -1191,7 +1192,7 @@ function Me.DiceMasterRollDetailFrame_Update()
 		
 			if not store.experience or not store.level then
 				frame.PortraitFrame.Level:SetText( 1 )
-				frame.xpBar.rankText:SetText( "XP: 0/100" )
+				frame.xpBar.rankText:SetText( L["XP: 0/100"] )
 				frame.xpBar:SetValue( 0 )
 				return
 			end
@@ -1199,7 +1200,7 @@ function Me.DiceMasterRollDetailFrame_Update()
 			frame.PortraitFrame.Level:SetText( store.level )
 			frame.PortraitFrame.Level:Show()
 			frame.PortraitFrame.LevelBG:Show()
-			frame.xpBar.rankText:SetText( "XP: " .. store.experience .. "/100" )
+			frame.xpBar.rankText:SetText( L["XP: %d/100"]:format( store.experience ) )
 			frame.xpBar:SetValue( store.experience )
 			
 			if not store.health or not store.healthMax then
@@ -1216,7 +1217,7 @@ function Me.DiceMasterRollDetailFrame_Update()
 		else
 			frame.healthFrame.healthValue:SetText( "10/10" );
 			frame.PortraitFrame.Level:SetText( 1 )
-			frame.xpBar.rankText:SetText( "XP: 0/100" )
+			frame.xpBar.rankText:SetText( L["XP: 0/100"] )
 			frame.xpBar:SetValue( 0 )
 		end
 	end
@@ -1243,7 +1244,7 @@ end
 		frame.ListInset.Totals:Hide()
 	else
 		frame.ListInset.Totals:Show()
-		frame.ListInset.Totals:SetText("No Recent Rolls")
+		frame.ListInset.Totals:SetText(L["No Recent Rolls"])
 		for i=1,9,1 do
 			local button = _G["DiceMasterRollTrackerHistoryButton"..i];
 			button:Hide()
@@ -1627,7 +1628,7 @@ function Me.DiceMasterMapNodes_Update()
 		DiceMasterMapNodesTotals:Hide()
 	else
 		DiceMasterMapNodesTotals:Show()
-		DiceMasterMapNodesTotals:SetText("No Map Nodes")
+		DiceMasterMapNodesTotals:SetText(L["No Map Nodes"])
 		DiceMasterMapNodes.selected = nil
 	end
 	
@@ -1744,11 +1745,11 @@ function Me.DiceMasterMapNodes_Delete()
 	
 	local icon = Me.Profile.mapNodes[ DiceMasterMapNodes.selected ].icon;
 	local title = Me.Profile.mapNodes[ DiceMasterMapNodes.selected ].title;
-	if icon and C_Texture.GetAtlasInfo(icon) then
-		Me.PrintMessage( CreateAtlasMarkup( icon ) .. " ".. title .." has been deleted.", "SYSTEM");
-	else
-		Me.PrintMessage( "|TInterface/Icons/inv_misc_questionmark:16|t ".. title .." has been deleted.", "SYSTEM");
-	end
+		if icon and C_Texture.GetAtlasInfo(icon) then
+			Me.PrintMessage( CreateAtlasMarkup( icon ) .. " " .. L["%s has been deleted."]:format( title ), "SYSTEM");
+		else
+			Me.PrintMessage( "|TInterface/Icons/inv_misc_questionmark:16|t " .. L["%s has been deleted."]:format( title ), "SYSTEM");
+		end
 	tremove( Me.Profile.mapNodes, DiceMasterMapNodes.selected );
 	
 	DiceMasterMapNodes.selected = nil
@@ -1777,7 +1778,7 @@ function Me.DiceMasterMapNodes_New()
 
 	tinsert( Me.Profile.mapNodes, newMapNode );
 	
-	Me.PrintMessage("|TInterface/MINIMAP/TRACKING/Target:16|t New Map Node has been added to your map.", "SYSTEM");
+	Me.PrintMessage("|TInterface/MINIMAP/TRACKING/Target:16|t " .. L["New Map Node has been added to your map."], "SYSTEM");
 	
 	DiceMasterMapNodes.selected = #Me.Profile.mapNodes
 	
@@ -1808,7 +1809,7 @@ function Me.DiceMasterMapNodes_Save()
 	node.description = description;
 	node.hidden = hidden;
 	
-	Me.PrintMessage( CreateAtlasMarkup( icon ) .. " ".. title .." has been saved.", "SYSTEM");
+	Me.PrintMessage( CreateAtlasMarkup( icon ) .. " " .. L["%s has been saved."]:format( title ), "SYSTEM");
 	
 	Me.UpdateAllMapNodes();
 	Me.DiceMasterMapNodes_Update()

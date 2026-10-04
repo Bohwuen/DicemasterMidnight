@@ -590,7 +590,7 @@ DiceMaster4.RollListWoWJdR = {
 			wheelName = "Athl",
 			icon = 132120,
 			desc = "La habilidad física que tiene el personaje a la hora de correr, esprintar, empujar….", 
-			skill = "Destreza",
+			skill = "Vigor",
 		},
 		{
 			name = "Sigilo",
@@ -678,7 +678,7 @@ DiceMaster4.RollListWoWJdR = {
 			wheelName = "Intimidación",
 			icon = 236310,
 			desc = "Cuando un personaje está en una conversación e intenta sacar algo en un negocio e intenta convencer a alguien y ante las negativas tu personaje puede tratar de intimidar a al receptor en cuestión.", 
-			skill = "Carisma",
+			skill = "Vigor",
 		},
 		{
 			name = "Diplomacia",
@@ -686,7 +686,7 @@ DiceMaster4.RollListWoWJdR = {
 			wheelName = "Diplomacia",
 			icon = 236550,
 			desc = "La capacidad de tu personaje a llegar a acuerdos de forma amistosa.", 
-			skill = "Percepción",
+			skill = "Carisma",
 		},
 	},
 	["Habilidades mágicas"] = {

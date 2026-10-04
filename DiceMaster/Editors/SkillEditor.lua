@@ -185,6 +185,12 @@ function Me.SkillEditorType_OnLoad(frame, level, menuList)
 end
 
 function Me.SkillEditorModifiers_OnClick(self, arg1, arg2, checked)
+	-- >>> PORT 5.2.1 — guard: arg1 puede ser nil si se clica sobre el título de categoría.
+	if not arg1 then
+		return
+	end
+	-- <<< PORT 5.2.1
+
 	for i = 1, #SkillEditorModifiers do
 		if SkillEditorModifiers[i] == arg1 then
 			tremove( SkillEditorModifiers, i );
@@ -204,7 +210,11 @@ function Me.SkillEditorModifiers_OnClick(self, arg1, arg2, checked)
 			modifiersList = modifiersList .. ", ".. GetSkillNameFromGUID( SkillEditorModifiers[i] );
 		end
 	end
-	UIDropDownMenu_SetText( DiceMasterSkillEditor.skillModifiers, "|cFFFFD100Skill Modifiers:|r " .. modifiersList )
+	-- >>> PORT 5.2.1 — parentKey real es 'skillModifiers' (minúscula).
+	if DiceMasterSkillEditor.skillModifiers then
+		UIDropDownMenu_SetText( DiceMasterSkillEditor.skillModifiers, "|cFFFFD100Skill Modifiers:|r " .. modifiersList )
+	end
+	-- <<< PORT 5.2.1
 end
 
 function Me.SkillEditorModifiers_OnLoad(frame, level, menuList)

@@ -10,15 +10,15 @@ local Me = DiceMaster4
 local Profile = Me.Profile
 
 local TIMER_INTERVALS = {
-	{name = "1 Minute", time = 60},
-	{name = "2 Minutes", time = 120},
-	{name = "3 Minutes", time = 180},
-	{name = "5 Minutes", time = 300},
-	{name = "10 Minutes", time = 600},
-	{name = "15 Minutes", time = 900},
-	{name = "30 Minutes", time = 1800},
-	{name = "45 Minutes", time = 2700},
-	{name = "1 Hour", time = 3600},
+	{name = L["1 Minute"],  time = 60},
+	{name = L["2 Minutes"], time = 120},
+	{name = L["3 Minutes"], time = 180},
+	{name = L["5 Minutes"], time = 300},
+	{name = L["10 Minutes"], time = 600},
+	{name = L["15 Minutes"], time = 900},
+	{name = L["30 Minutes"], time = 1800},
+	{name = L["45 Minutes"], time = 2700},
+	{name = L["1 Hour"],    time = 3600},
 }
 
 local CURRENT_COMBAT_ROUND = 1;
@@ -63,8 +63,8 @@ local returnFunc = function( bannerData )
 		DiceMasterBannerPromptDialog.options = {}
 		local option = {
 			icon = "Interface/Icons/inv_misc_questionmark";
-			name = "Title";
-			desc = "Description";
+			name = L["Title"];
+			desc = L["Description"];
 		};
 		tinsert( DiceMasterBannerPromptDialog.options, option );
 	end
@@ -219,13 +219,14 @@ end
 
 function Me.RollBanner_SendBanner()
 	
+	-- >>> l10n esES
 	if DiceMasterRollBanner:IsShown() then
-		UIErrorsFrame:AddMessage( "A banner is already playing.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["A banner is already playing."], 1.0, 0.0, 0.0 );
 		return
 	end
-	
+
 	if DiceMasterBannerPromptDialog.BannerTitle:GetText() == "" then
-		UIErrorsFrame:AddMessage( "Enter a title for this banner.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Enter a title for this banner."], 1.0, 0.0, 0.0 );
 		return
 	end
 	
@@ -390,8 +391,9 @@ function Me.RollBanner_OnBanner( data, dist, sender )
 			DiceMasterTurnTracker.TurnTitle:SetText( data.ti )
 			Me.SetupTooltip( DiceMasterTurnTracker, nil, "|cFFffd100"..data.ti )
 				
+			-- >>> l10n esES
 			if data.cr then
-				DiceMasterTurnTracker.TurnTotal:SetText( "Round " .. data.cr )
+				DiceMasterTurnTracker.TurnTotal:SetText( L["Round %d"]:format( data.cr ) )
 			end
 				
 			if data.tm then
