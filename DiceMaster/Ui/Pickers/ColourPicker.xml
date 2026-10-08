@@ -13,8 +13,7 @@
     <Scripts>
       <OnLoad>
 		self.PortraitContainer.portrait:SetTexture("Interface/AddOns/DiceMaster/Texture/logo")
-		self.TitleContainer.TitleText:SetText( "Colours" )
-		
+		self.TitleContainer.TitleText:SetText( L["Colours"] )		
 		self:SetClampedToScreen( true )
 		self:RegisterForDrag( "LeftButton" )
 		self:SetScript( "OnDragStart", self.StartMoving )
@@ -33,7 +32,7 @@
 		<Scripts>
 		  <OnLoad>
 			UIDropDownMenu_Initialize( self, DiceMaster4.ColourPickerDropDown_OnLoad )
-			UIDropDownMenu_SetText(self, "Select a Preset Colour") 
+			UIDropDownMenu_SetText(self, L["Select a Preset Colour"]) 
 			UIDropDownMenu_SetWidth(self, 150, 5)
 		  </OnLoad>
 		</Scripts>
@@ -89,17 +88,20 @@
         </Scripts>
       </EditBox>
 	  
-	  <Button name="$parentSelectButton" inherits="UIPanelButtonTemplate" text="Select Colour">
-		<Size x="100" y="22"/>
-		<Anchors>
-			<Anchor point="BOTTOMRIGHT" x="-6" y="4"/>
-		</Anchors>
-		<Scripts>
-			<OnClick>
-				DiceMaster4.ColourPicker_OnColourPick()
-			</OnClick>
-		</Scripts>
-	  </Button>
+		<Button name="$parentSelectButton" inherits="UIPanelButtonTemplate">
+			<Size x="100" y="22"/>
+			<Anchors>
+				<Anchor point="BOTTOMRIGHT" x="-6" y="4"/>
+			</Anchors>
+			<Scripts>
+				<OnLoad>
+					self:SetText( L["Select Colour"] )
+				</OnLoad>
+				<OnClick>
+					DiceMaster4.ColourPicker_OnColourPick()
+				</OnClick>
+			</Scripts>
+		</Button>
       
     </Frames>
   </Frame>

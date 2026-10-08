@@ -455,7 +455,7 @@
 	</Anchors>
 	<Layers>
 		<Layer level="ARTWORK">
-			<FontString parentKey="Title" inherits="GameFontHighlight" text="Exportar código">
+			<FontString parentKey="Title" inherits="GameFontHighlight">
 				<Size x="250"/>
 				<Anchors>
 					<Anchor point="TOP" y="-20"/>
@@ -479,7 +479,7 @@
 			<Size y="100"/>
 			<Layers>
 				<Layer level="ARTWORK">
-					<FontString parentKey="Label" inherits="GameFontNormal" text="Import Code">
+					<FontString parentKey="Label" inherits="GameFontNormal">
 						<Anchors>
 							<Anchor point="TOPLEFT"/>
 						</Anchors>
@@ -513,7 +513,7 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					_G[self:GetName().."Text"]:SetText("fijar todos los niveles de habilidad a 0.")
+					_G[self:GetName().."Text"]:SetText(L["Set all skill ranks to 0."])
 				</OnLoad>
 				<OnClick>
 					DiceMaster4.SkillFrame_ExportSheet();
@@ -521,7 +521,7 @@
 				</OnClick>
 			</Scripts>
 		</CheckButton>
-		<Button parentKey="CancelButton" inherits="UIPanelButtonTemplate" text="CLOSE">
+		<Button parentKey="CancelButton" inherits="UIPanelButtonTemplate">
 			<Size x="120" y="22"/>
 			<Anchors>
 				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeKey="$parent.ContentArea"/>
@@ -535,11 +535,16 @@
 		</Button>
 	</Frames>
 	<Scripts>
+		<OnLoad>
+			self.Title:SetText(L["Export Code"])
+			self.ImportControl.Label:SetText(L["Import Code"])
+			self.CancelButton:SetText(L["Close"])
+		</OnLoad>
 		<OnShow>
 			if self.titleText then
 				self.Title:SetText( self.titleText );
 			else
-				self.Title:SetText( "Exportar Código" );
+				self.Title:SetText( L["Export Code"] );
 			end
 		</OnShow>
 	</Scripts>
@@ -552,7 +557,7 @@
 	</Anchors>
 	<Layers>
 		<Layer level="ARTWORK">
-			<FontString parentKey="Title" inherits="GameFontHighlight" text="Importar Habilidades">
+			<FontString parentKey="Title" inherits="GameFontHighlight">
 				<Size x="250"/>
 				<Anchors>
 					<Anchor point="TOP" y="-20"/>
@@ -576,7 +581,7 @@
 			<Size y="100"/>
 			<Layers>
 				<Layer level="ARTWORK">
-					<FontString parentKey="Label" inherits="GameFontNormal" text="Importar Código">
+					<FontString parentKey="Label" inherits="GameFontNormal">
 						<Anchors>
 							<Anchor point="TOPLEFT"/>
 						</Anchors>
@@ -603,7 +608,7 @@
 				</OnLoad>
 			</Scripts>
 		</Frame>
-		<Button parentKey="ImportButton" inherits="UIPanelButtonTemplate" text="Import">
+		<Button parentKey="ImportButton" inherits="UIPanelButtonTemplate">
 			<Size x="120" y="22"/>
 			<Anchors>
 				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeKey="$parent.ContentArea" x="-100"/>
@@ -628,6 +633,13 @@
 			</Scripts>
 		</Button>
 	</Frames>
+	  <Scripts>
+		<OnLoad>
+		self.Title:SetText(L["Import Skills"])
+		self.ImportControl.Label:SetText(L["Import Code"])
+		self.ImportButton:SetText(L["Import"])
+		</OnLoad>
+	</Scripts>
   </Frame>
   
   <Actor name="DiceMasterPetFrameActorTemplate" mixin="ModelSceneActorMixin" virtual="true">
@@ -802,14 +814,14 @@
 						DiceMasterTraitsLocked:SetAnimation(146);
 						PlaySound(71904);
 					</OnShow>
-					<OnEnter>
-						GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 500);
-						GameTooltip:SetText( "Rasgo Bloqueado", 1, 1, 1 );
-						GameTooltip:AddLine( "Este rasgo ha sido aprobado por un oficial y está bloqueado. Desbloquearlo también eliminará la aprobación del oficial.", 1, 0.81, 0, true )
-						GameTooltip:AddLine( "&lt;Click derecho para desbloquear&gt;", 0.5, 0.5, 0.5, true )
-						GameTooltip:Show();
-						SetCursor("LOCK_CURSOR");
-					</OnEnter>
+						<OnEnter>
+							GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 500);
+							GameTooltip:SetText( L["Locked Trait"], 1, 1, 1 );
+							GameTooltip:AddLine( L["This trait has been approved by an officer and is locked. Unlocking it will also remove the officer's approval."], 1, 0.81, 0, true )
+							GameTooltip:AddLine( L["&lt;Right-click to unlock&gt;"], 0.5, 0.5, 0.5, true )
+							GameTooltip:Show();
+							SetCursor("LOCK_CURSOR");
+						</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
 						ResetCursor();
@@ -853,10 +865,8 @@
 					</Anchors>
 					<Scripts>
 					  <OnLoad>
-						
-						self:SetCustomTooltip( "|cFFFFD100Click para seleccionar un ícono para este rasgo." )
-						
-					  </OnLoad>
+						self:SetCustomTooltip( L["|cFFFFD100Click to select an icon for this trait."] )
+					</OnLoad>
 					  <OnClick>
 						PlaySound(54132)
 						DiceMaster4.IconPicker_Open( DiceMaster4.editor )
@@ -897,9 +907,9 @@
 					</Layers>
 					<Scripts>
 					  <OnLoad> 
-						DiceMaster4.SetupTooltip( self, nil, "|cFFFFD100Click para cambiar el número de usos de este rasgo." )
-						self:RegisterForClicks( "LeftButtonDown", "RightButtonDown" )
-					  </OnLoad>
+							DiceMaster4.SetupTooltip( self, nil, L["|cFFFFD100Click to change the number of uses for this trait."] )
+							self:RegisterForClicks( "LeftButtonDown", "RightButtonDown" )
+						</OnLoad>
 					  <OnClick>
 						DiceMaster4.TraitEditor_ChangeUsage( button )
 						self:SetWidth(self.text:GetStringWidth())
@@ -921,7 +931,7 @@
 					</Layers>
 					<Scripts>
 					  <OnLoad> 
-						DiceMaster4.SetupTooltip( self, nil, "|cFFFFD100Click para cambiar el rango de este rasgo." )
+						DiceMaster4.SetupTooltip( self, nil, L["|cFFFFD100Click to change the range of this trait."] )
 						self:RegisterForClicks( "LeftButtonDown", "RightButtonDown" )
 					  </OnLoad>
 					  <OnClick>
@@ -944,7 +954,7 @@
 					</Layers>
 					<Scripts>
 					  <OnLoad> 
-						DiceMaster4.SetupTooltip( self, nil, "|cFFFFD100Click para cambiar el tiempo de lanzamiento de este rasgo." )
+						DiceMaster4.SetupTooltip( self, nil, L["|cFFFFD100Click to change the cast time of this trait."] )
 						self:RegisterForClicks( "LeftButtonDown", "RightButtonDown" )
 					  </OnLoad>
 					  <OnClick>
@@ -968,7 +978,7 @@
 					</Layers>
 					<Scripts>
 					  <OnLoad> 
-						DiceMaster4.SetupTooltip( self, nil, "|cFFFFD100Click para cambiar el tiempo de enfriamiento de este rasgo." )
+						DiceMaster4.SetupTooltip( self, nil, L["|cFFFFD100Click to change the cooldown of this trait."] )
 						self:RegisterForClicks( "LeftButtonDown", "RightButtonDown" )
 					  </OnLoad>
 					  <OnClick>
@@ -1031,17 +1041,27 @@
 						<Anchor point="CENTER" x="0" y="100" />
 					</Anchors>
 				</Texture>
-				<FontString name="$parentTitle" inherits="GameFontNormal" text="Sin Habilidades">
+				<FontString name="$parentTitle" inherits="GameFontNormal">
 					<Size x="200" y="0"/>
 					<Anchors>
 						<Anchor point="TOP" relativeTo="$parentIcon" relativePoint="BOTTOM" x="0" y="2"/>
 					</Anchors>
+					<Scripts>
+						<OnLoad>
+							self:SetText(L["No Skills"])
+						</OnLoad>
+					</Scripts>
 				</FontString>
-				<FontString name="$parentDesc" inherits="GameFontHighlight" justifyH="CENTER" text="no tienes ninguna habilidad todavía. Elige una plantilla de abajo o haz clic en 'Nueva' para empezar:">
+					<FontString name="$parentDesc" inherits="GameFontHighlight" justifyH="CENTER">
 					<Size x="200" y="0"/>
 					<Anchors>
 						<Anchor point="TOP" relativeTo="$parentTitle" relativePoint="BOTTOM" x="0" y="-4"/>
 					</Anchors>
+					<Scripts>
+							<OnLoad>
+						self:SetText(L["You don't have any skills yet. Choose a template below or click 'New' to get started:"])
+					</OnLoad>
+					</Scripts>
 				</FontString>
 			</Layer>
 		</Layers>
@@ -1054,7 +1074,7 @@
 				<Scripts>
 				  <OnShow>
 					UIDropDownMenu_Initialize( self, DiceMaster4.SkillFrameTemplate_OnLoad )
-					UIDropDownMenu_SetText( self, "Elegir plantilla" )
+					UIDropDownMenu_SetText( self, L["Choose Template"] )
 					UIDropDownMenu_SetWidth(self, 150, 5)
 				  </OnShow>
 				</Scripts>
@@ -1119,7 +1139,7 @@
 					</OnMouseUp>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-						GameTooltip:SetText( "Editar mascota" )
+						GameTooltip:SetText( L["Edit Pet"] )
 						GameTooltip:Show()
 						self.Hover:Play();
 					</OnEnter>
@@ -1140,7 +1160,7 @@
 				
 				<Scripts>
 					<OnLoad>
-						_G[self:GetName().."Text"]:SetText("Activar mascota")
+						_G[self:GetName().."Text"]:SetText(L["Enable Pet"])
 					</OnLoad>
 					<OnClick>
 						DiceMaster4.Profile.pet.enable = self:GetChecked()
@@ -1176,11 +1196,11 @@
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
 						if DiceMaster4.Profile.pet.isEgg then
-							GameTooltip_SetTitle(GameTooltip, "Warm", HIGHLIGHT_FONT_COLOR);
-							GameTooltip_AddNormalLine(GameTooltip, "Keep your egg warm until it's ready to hatch!", true);
+							GameTooltip_SetTitle(GameTooltip, L["Warm"], HIGHLIGHT_FONT_COLOR);
+							GameTooltip_AddNormalLine(GameTooltip, L["Keep your egg warm until it's ready to hatch!"], true);
 						else
-							GameTooltip_SetTitle(GameTooltip, "Feed", HIGHLIGHT_FONT_COLOR);
-							GameTooltip_AddNormalLine(GameTooltip, "Feed your pet an item from your inventory.", true);
+							GameTooltip_SetTitle(GameTooltip, L["Feed"], HIGHLIGHT_FONT_COLOR);
+							GameTooltip_AddNormalLine(GameTooltip, L["Feed your pet an item from your inventory."], true);
 						end
 						GameTooltip:Show();
 					</OnEnter>
@@ -1206,7 +1226,7 @@
 						PlaySound(857);
 						local lastCastTime = self.lastCastTime or 0;
 						if time() - lastCastTime &lt; 10 then
-							UIErrorsFrame:AddMessage( "Esa habilidad aún no está lista.", 1.0, 0.0, 0.0, 1 ); 
+							UIErrorsFrame:AddMessage( L["That ability is not ready yet."], 1.0, 0.0, 0.0, 1 ); 
 							return 
 						end
 						DiceMaster4.PetEditor_RestPet();
@@ -1235,7 +1255,7 @@
 						PlaySound(857);
 						local lastCastTime = self.lastCastTime or 0;
 						if time() - lastCastTime &lt; 10 then
-							UIErrorsFrame:AddMessage( "Esa habilidad aún no está lista.", 1.0, 0.0, 0.0, 1 ); 
+							UIErrorsFrame:AddMessage( L["That ability is not ready yet."], 1.0, 0.0, 0.0, 1 ); 
 							return 
 						end
 						DiceMaster4.PetEditor_WashPet();
@@ -1264,7 +1284,7 @@
 						PlaySound(857);
 						local lastCastTime = self.lastCastTime or 0;
 						if time() - lastCastTime &lt; 10 then
-							UIErrorsFrame:AddMessage( "Esa habilidad aún no está lista.", 1.0, 0.0, 0.0, 1 ); 
+							UIErrorsFrame:AddMessage( L["That ability is not ready yet."], 1.0, 0.0, 0.0, 1 ); 
 							return 
 						end
 						DiceMaster4.PetEditor_CleanPetDroppings();
@@ -1280,7 +1300,7 @@
 				</Anchors>
 				<Scripts>
 				  <OnLoad>
-					self:SetCustomTooltip( "|cFFFFD100Click to select an icon for your pet." )
+					self:SetCustomTooltip( L["|cFFFFD100Click to select an icon for your pet."] )
 				  </OnLoad>
 				  <OnClick>
 					PlaySound(54132)
@@ -1361,7 +1381,7 @@
 				<Scripts>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip:AddLine("Pet Item");
+						GameTooltip:AddLine( L["Pet Item"] );
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>
@@ -1457,8 +1477,8 @@
 							</OnMouseUp>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-								GameTooltip_SetTitle(GameTooltip, "Rotar a la izquierda", HIGHLIGHT_FONT_COLOR);
-								GameTooltip_AddNormalLine(GameTooltip, "Rota el modelo a la izquierda.", true);
+								GameTooltip_SetTitle(GameTooltip, L["Rotate Left"], HIGHLIGHT_FONT_COLOR);
+								GameTooltip_AddNormalLine(GameTooltip, L["Rotates the model to the left."], true);
 								GameTooltip:Show();
 							</OnEnter>
 							<OnLeave function="GameTooltip_Hide"/>
@@ -1493,8 +1513,8 @@
 							</OnMouseUp>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-								GameTooltip_SetTitle(GameTooltip, "Rotar a la derecha", HIGHLIGHT_FONT_COLOR);
-								GameTooltip_AddNormalLine(GameTooltip, "Rota el modelo a la derecha.", true);
+								GameTooltip_SetTitle(GameTooltip, L["Rotate Right"], HIGHLIGHT_FONT_COLOR);
+								GameTooltip_AddNormalLine(GameTooltip, L["Rotates the model to the right."], true);
 								GameTooltip:Show();
 							</OnEnter>
 							<OnLeave function="GameTooltip_Hide"/>
@@ -1536,8 +1556,8 @@
 					</OnMouseUp>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip_SetTitle(GameTooltip, "Select Model", HIGHLIGHT_FONT_COLOR);
-						GameTooltip_AddNormalLine(GameTooltip, "Choose a model for your pet.", true);
+						GameTooltip_SetTitle(GameTooltip, L["Select Model"], HIGHLIGHT_FONT_COLOR);
+						GameTooltip_AddNormalLine(GameTooltip, L["Choose a model for your pet."], true);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>
@@ -1575,8 +1595,8 @@
 					</OnMouseUp>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip_SetTitle(GameTooltip, "Increase Scale", HIGHLIGHT_FONT_COLOR);
-						GameTooltip_AddNormalLine(GameTooltip, "Increase the scale of your pet's model.");
+						GameTooltip_SetTitle(GameTooltip, L["Increase Scale"], HIGHLIGHT_FONT_COLOR);
+						GameTooltip_AddNormalLine(GameTooltip, L["Increase the scale of your pet's model."]);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>
@@ -1614,8 +1634,8 @@
 					</OnMouseUp>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip_SetTitle(GameTooltip, "Decrease Scale", HIGHLIGHT_FONT_COLOR);
-						GameTooltip_AddNormalLine(GameTooltip, "Decrease the scale of your pet's model.");
+						GameTooltip_SetTitle(GameTooltip, L["Decrease Scale"], HIGHLIGHT_FONT_COLOR);
+						GameTooltip_AddNormalLine(GameTooltip, L["Decrease the scale of your pet's model."]);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>
@@ -2414,9 +2434,9 @@
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip_SetTitle(GameTooltip, "Disenchant", HIGHLIGHT_FONT_COLOR);
-						GameTooltip_AddColoredLine(GameTooltip, "1.5 sec cast", HIGHLIGHT_FONT_COLOR, true);
-						GameTooltip_AddNormalLine(GameTooltip, "Extracts the magical element(s) from good quality (Green) or better items. The targeted item will be DESTROYED and will not be retrievable.", true);
+						GameTooltip_SetTitle(GameTooltip, L["Disenchant"], HIGHLIGHT_FONT_COLOR);
+						GameTooltip_AddColoredLine(GameTooltip, L["1.5 sec cast"], HIGHLIGHT_FONT_COLOR, true);
+						GameTooltip_AddNormalLine(GameTooltip, L["Extracts the magical element(s) from good quality (Green) or better items. The targeted item will be DESTROYED and will not be retrievable."], true);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>
@@ -2436,9 +2456,9 @@
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip_SetTitle(GameTooltip, "Milling", HIGHLIGHT_FONT_COLOR);
-						GameTooltip_AddColoredLine(GameTooltip, "1.5 sec cast", HIGHLIGHT_FONT_COLOR, true);
-						GameTooltip_AddNormalLine(GameTooltip, "Crush 5 herbs to create pigments for making inks. This will destroy the herbs in the process.", true);
+						GameTooltip_SetTitle(GameTooltip, L["Milling"], HIGHLIGHT_FONT_COLOR);
+						GameTooltip_AddColoredLine(GameTooltip, L["1.5 sec cast"], HIGHLIGHT_FONT_COLOR, true);
+						GameTooltip_AddNormalLine(GameTooltip, L["Crush 5 herbs to create pigments for making inks. This will destroy the herbs in the process."], true);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>
@@ -2459,11 +2479,16 @@
 		</Anchors>
 		<Layers>
 			<Layer level="BORDER">
-				<FontString name="$parentPageText" inherits="GameFontNormal" text="Page">
+				<FontString name="$parentPageText" inherits="GameFontNormal">
 					<Size x="104" y="0"/>
 					<Anchors>
 						<Anchor point="BOTTOM" x="0" y="15"/>
 					</Anchors>
+					<Scripts>
+						<OnLoad>
+							self:SetText(L["Page"])
+						</OnLoad>
+					</Scripts>
 				</FontString>
 			</Layer>
 		</Layers>
@@ -2499,7 +2524,7 @@
 					</OnMouseUp>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-						GameTooltip:SetText( "Edit Shop" )
+						GameTooltip:SetText( L["Edit Shop"] )
 						GameTooltip:Show()
 						self.Hover:Play();
 					</OnEnter>
@@ -2520,7 +2545,7 @@
 				
 				<Scripts>
 					<OnLoad>
-						_G[self:GetName().."Text"]:SetText("Enable Shop") 
+						_G[self:GetName().."Text"]:SetText(L["Enable Shop"])
 					</OnLoad>
 					<OnShow>
 						self:SetChecked( not( DiceMaster4.Profile.hideShop ) )
@@ -2599,10 +2624,15 @@
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<FontString inherits="GameFontNormal" justifyH="LEFT" text="PREV">
+						<FontString inherits="GameFontNormal" justifyH="LEFT">
 							<Anchors>
 								<Anchor point="LEFT" relativePoint="RIGHT"/>
 							</Anchors>
+							<Scripts>
+								<OnLoad>
+									self:SetText(L["PREV"])
+								</OnLoad>
+							</Scripts>
 						</FontString>
 						<Texture file="Interface\Buttons\UI-PageButton-Background">
 							<Size x="32" y="32"/>
@@ -2629,10 +2659,15 @@
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<FontString inherits="GameFontNormal" justifyH="RIGHT" text="NEXT">
+						<FontString inherits="GameFontNormal" justifyH="RIGHT">
 							<Anchors>
 								<Anchor point="RIGHT" relativePoint="LEFT" x="-3" y="0"/>
 							</Anchors>
+							<Scripts>
+								<OnLoad>
+									self:SetText(L["NEXT"])
+								</OnLoad>
+							</Scripts>
 						</FontString>
 						<Texture file="Interface\Buttons\UI-PageButton-Background">
 							<Size x="32" y="32"/>
@@ -2744,10 +2779,15 @@
 				<HighlightTexture atlas="chatframe-button-highlight" useAtlasSize="true" alphaMode="ADD"/>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString parentKey="text" inherits="GameFontNormal" text="Ex">
+						<FontString parentKey="text" inherits="GameFontNormal">
 							<Anchors>
 								<Anchor point="CENTER" x="0" y="0"/>
 							</Anchors>
+							<Scripts>
+								<OnLoad>
+									self:SetText("Ex")
+								</OnLoad>
+							</Scripts>
 						</FontString>
 					</Layer>
 				</Layers>
@@ -2766,8 +2806,8 @@
 					</OnMouseUp>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip_SetTitle(GameTooltip, "Export", HIGHLIGHT_FONT_COLOR);
-						GameTooltip_AddNormalLine(GameTooltip, "Generate an export code for an item.", true);
+						GameTooltip_SetTitle(GameTooltip, L["Export"], HIGHLIGHT_FONT_COLOR);
+						GameTooltip_AddNormalLine(GameTooltip, L["Generate an export code for an item."], true);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>
@@ -2831,8 +2871,8 @@
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip_SetTitle(GameTooltip, "Clean Up Bank", HIGHLIGHT_FONT_COLOR);
-						GameTooltip_AddNormalLine(GameTooltip, "Auto-sorts your bank to make room for new items.");
+						GameTooltip_SetTitle(GameTooltip, L["Clean Up Bank"], HIGHLIGHT_FONT_COLOR);
+						GameTooltip_AddNormalLine(GameTooltip, L["Auto-sorts your bank to make room for new items."]);
 						GameTooltip:Show();
 					</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>

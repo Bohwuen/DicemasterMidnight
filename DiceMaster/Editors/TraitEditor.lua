@@ -24,9 +24,9 @@ local function TraitUpdated()
 end
 
 StaticPopupDialogs["DICEMASTER4_REMOVESHOPITEM"] = {
-  text = "Are you sure you want to remove this item from your shop?",
-  button1 = "Yes",
-  button2 = "No",
+  text = L["Are you sure you want to remove this item from your shop?"],
+  button1 = L["Yes"],
+  button2 = L["No"],
   OnAccept = function (self, data)
 	local item = Profile.shop[ data ]
 	if not item then
@@ -44,7 +44,7 @@ StaticPopupDialogs["DICEMASTER4_REMOVESHOPITEM"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_RESTOCKSHOPITEM"] = {
-  text = "Amount to restock:",
+  text = L["Amount to restock:"],
   button1 = "ACCEPT",
   button2 = "CANCEL",
   OnShow = function (self, data)
@@ -85,8 +85,8 @@ StaticPopupDialogs["DICEMASTER4_RESTOCKSHOPITEM"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_EXPORT"] = {
-  text = "Copy the following import code:",
-  button1 = "Okay",
+  text = L["Copy the following import code:"],
+  button1 = "OKAY",
   OnShow = function (self, data)
     self.EditBox:SetText( data )
 	self.EditBox:HighlightText()
@@ -102,8 +102,8 @@ StaticPopupDialogs["DICEMASTER4_EXPORT"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_IMPORTTRAIT"] = {
-  text = "Paste an import code into the field below and select 'Import' to import the trait.|n|nThis will overwrite your currently selected trait!",
-  button1 = "Import",
+  text = L["Paste an import code into the field below and select 'Import' to import the trait.|n|nThis will overwrite your currently selected trait!"],
+  button1 = L["Import"],
   button2 = "CANCEL",
   OnShow = function (self, data)
     self.EditBox:SetText( "" )
@@ -113,7 +113,7 @@ StaticPopupDialogs["DICEMASTER4_IMPORTTRAIT"] = {
 	local data = self.EditBox:GetText()
 	
 	if not data or data == nil or data == "" then
-		UIErrorsFrame:AddMessage( "Invalid import code.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Invalid import code."], 1.0, 0.0, 0.0 );
 		return
 	end
 	
@@ -123,9 +123,9 @@ StaticPopupDialogs["DICEMASTER4_IMPORTTRAIT"] = {
 	
 	if T and type( T ) == "table" and T.name and T.usage and T.desc and T.icon then
 		Profile.traits[Me.editing_trait] = T;
-		Me.PrintMessage( "|T" .. T.icon .. ":16|t " .. T.name .. " has been imported.", "SYSTEM" )
+					Me.PrintMessage( L["|T%s:16|t %s has been imported."]:format( T.icon, T.name ), "SYSTEM" )
 	else
-		UIErrorsFrame:AddMessage( "Corrupt trait data found. Unable to import code.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Corrupt trait data found. Unable to import code."], 1.0, 0.0, 0.0 );
 	end
 	TraitUpdated()
 	Me.TraitEditor_StartEditing( Me.editing_trait )
@@ -139,8 +139,9 @@ StaticPopupDialogs["DICEMASTER4_IMPORTTRAIT"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_IMPORTITEM"] = {
-  text = "Paste an import code into the field below and select 'Import' to import the item.",
-  button1 = "Import",
+  text = L["Paste an import code into the field below and select 'Import' to import the item."],
+  button1 = L["Import"],
+  button2 = "CANCEL",
   button2 = "CANCEL",
   OnShow = function (self, data)
     self.EditBox:SetText( "" )
@@ -150,7 +151,7 @@ StaticPopupDialogs["DICEMASTER4_IMPORTITEM"] = {
 	local data = self.EditBox:GetText()
 	
 	if not data or data == nil or data == "" then
-		UIErrorsFrame:AddMessage( "Invalid import code.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Invalid import code."], 1.0, 0.0, 0.0 );
 		return
 	end
 	
@@ -166,7 +167,7 @@ StaticPopupDialogs["DICEMASTER4_IMPORTITEM"] = {
 		local itemData = Me:Serialize( "ITEM", T );
 		Me:SendCommMessage( "DCM4", itemData, "WHISPER", UnitName("player"), "NORMAL" )
 	else
-		UIErrorsFrame:AddMessage( "Corrupt item data found. Unable to import code.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Corrupt item data found. Unable to import code."], 1.0, 0.0, 0.0 );
 	end
   end,
   hasEditBox = true,
@@ -178,9 +179,9 @@ StaticPopupDialogs["DICEMASTER4_IMPORTITEM"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_DELETETRAIT"] = {
-  text = "Are you sure you want to delete this trait?",
-  button1 = "Yes",
-  button2 = "No",
+  text = L["Are you sure you want to delete this trait?"],
+  button1 = L["Yes"],
+  button2 = L["No"],
   OnAccept = function (self, data)
 	Me.TraitEditor_SelectIcon( "Interface/Icons/inv_misc_questionmark" )
     Me.editor.scrollFrame.Container.traitName:SetText("Trait Name")
@@ -189,8 +190,8 @@ StaticPopupDialogs["DICEMASTER4_DELETETRAIT"] = {
 	Me.TraitEditor_SaveDescription()
 	if not Me.editing_trait then return end
 	
-	Me.PrintMessage( "|T" .. Profile.traits[Me.editing_trait].icon .. ":16|t " .. Profile.traits[Me.editing_trait].name .. " has been deleted.", "SYSTEM" )
-	
+	Me.PrintMessage( L["|T%s:16|t %s has been deleted."]:format( Profile.traits[Me.editing_trait].icon, Profile.traits[Me.editing_trait].name ), "SYSTEM" )
+
 	if Me.editing_trait == 1 then
 		Me.TraitEditor_StartEditing( Me.editing_trait )
 	else
@@ -204,15 +205,15 @@ StaticPopupDialogs["DICEMASTER4_DELETETRAIT"] = {
 }
 
 StaticPopupDialogs["DICEMASTER4_UNLEARNSKILL"] = {
-  text = "Do you want to unlearn %s, and lose all proficiency in this skill?",
-  button1 = "Unlearn",
+  text = L["Do you want to unlearn %s, and lose all proficiency in this skill?"],
+  button1 = L["Unlearn"],
   button2 = "CANCEL",
   OnAccept = function (self, data)
 	if not ( Me.Profile.skills[data] ) then
 		return
 	end
 	
-	Me.PrintMessage( "|cFFFFFF00You have unlearned " .. Me.Profile.skills[data].name .. ".", "SYSTEM" )
+	Me.PrintMessage( L["|cFFFFFF00You have unlearned %s."]:format( Me.Profile.skills[data].name ), "SYSTEM" )
 	tremove( Me.Profile.skills, data )
 	DiceMasterSkillFrame.statusBarClickedPosition = nil;
 	Me.SkillFrame_UpdateSkills()
@@ -226,46 +227,46 @@ StaticPopupDialogs["DICEMASTER4_UNLEARNSKILL"] = {
 -- TUTORIAL STRINGS
 
 local TRAIT_EDITOR_TUTORIAL = {
-	"Left click on a trait to begin editing.",
-	"You can choose a custom name, icon, description, and more for your trait in the Trait Editor.",
-	"The format bar allows you to insert icons, colours, DiceMaster terms, and more into your trait's description.",
+	L["Left click on a trait to begin editing."],
+	L["You can choose a custom name, icon, description, and more for your trait in the Trait Editor."],
+	L["The format bar allows you to insert icons, colours, DiceMaster terms, and more into your trait's description."],
 }
 
 local PETS_TUTORIAL = {
-	"Toggle whether or not your pet is active, enabling the Pet Frame and allowing other players to inspect your pet on the Inspect Frame.|n|nUse the buttons on the top bar to choose a model for your pet or adjust its scale.",
-	"You can choose a custom name, icon, and more for your pet.|n|nThe Pet Item slot is used for items with the 'Learn Pet' action.",
+	L["Toggle whether or not your pet is active, enabling the Pet Frame and allowing other players to inspect your pet on the Inspect Frame.|n|nUse the buttons on the top bar to choose a model for your pet or adjust its scale."],
+	L["You can choose a custom name, icon, and more for your pet.|n|nThe Pet Item slot is used for items with the 'Learn Pet' action."],
 }
 
 local SKILLS_TUTORIAL = {
-	"Your custom skills and current progress in those skills are listed here, representing your character's proficiency in a particular area.|n|nYou can learn new skills from custom items, or raise a skill's level by crafting or harvesting custom items of the appropriate level.",
-	"Selecting a skill from the list above will display more details about the skill here.|n|nClick the 'Unlearn' button if you wish to unlearn the selected skill.",
-	"Click the 'New' button to create a new custom skill.",
-	"Choose your character's alignment from the dropdown menu.|n|nYou can export your skills with a unique import code which you can share with other players.",
+	L["Your custom skills and current progress in those skills are listed here, representing your character's proficiency in a particular area.|n|nYou can learn new skills from custom items, or raise a skill's level by crafting or harvesting custom items of the appropriate level."],
+	L["Selecting a skill from the list above will display more details about the skill here.|n|nClick the 'Unlearn' button if you wish to unlearn the selected skill."],
+	L["Click the 'New' button to create a new custom skill."],
+	L["Choose your character's alignment from the dropdown menu.|n|nYou can export your skills with a unique import code which you can share with other players."],
 }
 
 local INVENTORY_TUTORIAL = {
-	"Use the search box to search for specific items based on keyword.|n|nClick the Clean Up Inventory button to clean up your bags. It auto-sorts and moves items out of the way to make room for new items.",
-	"Custom items occupy a slot in your inventory, up to a maximum of 42 slots.",
-	"You can create, edit, copy, inspect, or sell items from your inventory by using these buttons.|n|nDungeon Masters can use the Loot button to allow group members to roll on an item in their inventory.|n|nYou can also export an item with a unique import code which other players can use to import the item.",
-	"You can learn to craft items and gain proficiency in a custom skill using the Craft button.|n|nRecipes must be learned from a custom item before they show up in your recipe list.",
-	"Right click the currency frame to change which of your custom currencies is displayed, or create a new one.",
+	L["Use the search box to search for specific items based on keyword.|n|nClick the Clean Up Inventory button to clean up your bags. It auto-sorts and moves items out of the way to make room for new items."],
+	L["Custom items occupy a slot in your inventory, up to a maximum of 42 slots."],
+	L["You can create, edit, copy, inspect, or sell items from your inventory by using these buttons.|n|nDungeon Masters can use the Loot button to allow group members to roll on an item in their inventory.|n|nYou can also export an item with a unique import code which other players can use to import the item."],
+	L["You can learn to craft items and gain proficiency in a custom skill using the Craft button.|n|nRecipes must be learned from a custom item before they show up in your recipe list."],
+	L["Right click the currency frame to change which of your custom currencies is displayed, or create a new one."],
 }
 
 if Me.PermittedUse() then
-	INVENTORY_TUTORIAL[4] = INVENTORY_TUTORIAL[4] .. "|n|nCharacters with the Enchanting skill can use the Disenchant button to extract Arcane Dust from Disenchantable items." 
+	INVENTORY_TUTORIAL[4] = INVENTORY_TUTORIAL[4] .. L["|n|nCharacters with the Enchanting skill can use the Disenchant button to extract Arcane Dust from Disenchantable items."]
 end
 
 local SHOP_TUTORIAL = {
-	"Toggle whether or not your shop is active, allowing other players to access your shop from the Inspect Frame.",
-	"You can add items to your shop from your inventory, enabling other players to browse and purchase them using a custom currency.",
-	"Right click the currency frame to change which of your custom currencies is displayed, or create a new one.",
+	L["Toggle whether or not your shop is active, allowing other players to access your shop from the Inspect Frame."],
+	L["You can add items to your shop from your inventory, enabling other players to browse and purchase them using a custom currency."],
+	L["Right click the currency frame to change which of your custom currencies is displayed, or create a new one."],
 }
 
 local BANK_TUTORIAL = {
-	"Use the search box to search for specific items based on keyword.|n|nClick the Clean Up Bank button to clean up your bank. It auto-sorts and moves items out of the way to make room for new items.",
-	"Custom items stored in your bank can be accessed by all of your characters.|n|nYou can deposit items into your bank from your inventory, or withdraw them by right clicking them.",
-	"You can export an item with a unique import code which you can share with other players.",
-	"Right click the currency frame to change which of your custom currencies is displayed, or create a new one.",
+	L["Use the search box to search for specific items based on keyword.|n|nClick the Clean Up Bank button to clean up your bank. It auto-sorts and moves items out of the way to make room for new items."],
+	L["Custom items stored in your bank can be accessed by all of your characters.|n|nYou can deposit items into your bank from your inventory, or withdraw them by right clicking them."],
+	L["You can export an item with a unique import code which you can share with other players."],
+	L["Right click the currency frame to change which of your custom currencies is displayed, or create a new one."],
 }
 
 local btype = function(s)
@@ -442,7 +443,7 @@ end
 
 function Me.TraitEditor_CurrencyList_OnLoad()
 	local info      = UIDropDownMenu_CreateInfo();
-    info.text       = "Currencies";
+    info.text       = L["Currencies"];
 	info.isTitle	= true;
     info.notCheckable = true;
     UIDropDownMenu_AddButton(info);
@@ -461,7 +462,7 @@ function Me.TraitEditor_CurrencyList_OnLoad()
 	end
 	
 	local info      = UIDropDownMenu_CreateInfo();
-    info.text       = "|cFF00FF00Create New...|r";
+    info.text       = L["|cFF00FF00Create New...|r"];
 	info.func     = function() DiceMasterCurrencyEditor:Show() end;
     info.notCheckable = true;
     UIDropDownMenu_AddButton(info);
@@ -572,14 +573,14 @@ function Me.TraitEditor_UpdateInventory()
 		GameTooltip:SetOwner( self, "ANCHOR_RIGHT" );
 		GameTooltip:SetText( currency.name, 1, 1, 1 );
 		if currencyActive == 1 then
-			GameTooltip:AddLine( "A universal currency used by all DiceMaster users.", nil, nil, nil, true );
+			GameTooltip:AddLine( L["A universal currency used by all DiceMaster users."], nil, nil, nil, true );
 		elseif currency.description then
 			GameTooltip:AddLine( currency.description, nil, nil, nil, true );
 		end
 		GameTooltip:AddLine( "|nTotal: |cFFFFFFFF" .. currency.value .. "|r", nil, nil, nil, true );
-		GameTooltip:AddLine( "<Click derecho para inhabilitar>", 0.44, 0.44, 0.44, true )
+		GameTooltip:AddLine( L["<Right-click to disable>"], 0.44, 0.44, 0.44, true )
 		if currencyActive > 1 then
-			GameTooltip:AddLine( "<Alt+Click derecho para borrar>", 0.44, 0.44, 0.44, true );
+			GameTooltip:AddLine( L["<Alt+Right-click to delete>"], 0.44, 0.44, 0.44, true );
 		end
 		GameTooltip:Show();
 	end)
@@ -692,14 +693,14 @@ function Me.TraitEditor_UpdateBank()
 		GameTooltip:SetOwner( self, "ANCHOR_RIGHT" );
 		GameTooltip:SetText( currency.name, 1, 1, 1 );
 		if currencyActive == 1 then
-			GameTooltip:AddLine( "A universal currency used by all DiceMaster users.", nil, nil, nil, true );
+			GameTooltip:AddLine( L["A universal currency used by all DiceMaster users."], nil, nil, nil, true );
 		elseif currency.description then
 			GameTooltip:AddLine( currency.description, nil, nil, nil, true );
 		end
 		GameTooltip:AddLine( "|nTotal: |cFFFFFFFF" .. currency.value .. "|r", nil, nil, nil, true );
-		GameTooltip:AddLine( "<Click derecho para cambiar>", 0.44, 0.44, 0.44, true )
+		GameTooltip:AddLine( L["<Right-click to change>"], 0.44, 0.44, 0.44, true ) 
 		if currencyActive > 1 then
-			GameTooltip:AddLine( "<Alt+Click derecho para borrar>", 0.44, 0.44, 0.44, true );
+			GameTooltip:AddLine( L["<Alt+Right-click to delete>"], 0.44, 0.44, 0.44, true );
 		end
 		GameTooltip:Show();
 	end)
@@ -753,14 +754,14 @@ function Me.ShopFrame_Update()
 		GameTooltip:SetOwner( self, "ANCHOR_RIGHT" );
 		GameTooltip:SetText( currency.name, 1, 1, 1 );
 		if currencyActive == 1 then
-			GameTooltip:AddLine( "A universal currency used by all DiceMaster users.", nil, nil, nil, true );
+			GameTooltip:AddLine( L["A universal currency used by all DiceMaster users."], nil, nil, nil, true );
 		elseif currency.description then
 			GameTooltip:AddLine( currency.description, nil, nil, nil, true );
 		end
 		GameTooltip:AddLine( "|nTotal: |cFFFFFFFF" .. currency.value .. "|r", nil, nil, nil, true );
-		GameTooltip:AddLine( "<Click derecho para cambiar>", 0.44, 0.44, 0.44, true )
+		GameTooltip:AddLine( L["<Right-click to change>"], 0.44, 0.44, 0.44, true )
 		if currencyActive > 1 then
-			GameTooltip:AddLine( "<Alt+Click derecho para borrar>", 0.44, 0.44, 0.44, true );
+			GameTooltip:AddLine( L["<Alt+Right-click to delete>"], 0.44, 0.44, 0.44, true );
 		end
 		GameTooltip:Show();
 	end)
@@ -1094,25 +1095,25 @@ function Me.TraitEditor_LootOnLoad(frame, level, menuList)
 	local info = UIDropDownMenu_CreateInfo()
 	info.isNotRadio = true;
 	info.notCheckable = true;
-	info.text = "Loot Options";
+	info.text = L["Loot Options"];
 	info.isTitle = true;
 	UIDropDownMenu_AddButton(info, level);
 	info.isTitle = false;
 	info.disabled = false; 
 	info.func = Me.TraitEditor_LootOnClick;
 	info.tooltipOnButton = true;
-	info.text = "Master Loot";
+	info.text = L["Master Loot"];
 	info.arg1 = Me.TraitEditor_MasterLootItem;
-	info.tooltipTitle = "Master Loot";
-	info.tooltipText = "Distribute an item to a specific player."
+	info.tooltipTitle = L["Master Loot"];
+	info.tooltipText = L["Distribute an item to a specific player."]
 	UIDropDownMenu_AddButton(info, level);
-	info.text = "Group Loot";
+	info.text = L["Group Loot"];
 	info.arg1 = Me.TraitEditor_GroupLootItem;
-	info.tooltipTitle = "Group Loot";
+	info.tooltipTitle = L["Group Loot"];
 	if Me.PermittedUse() then
-		info.tooltipText = "Allow all group members to roll Need, Greed, Disenchant, or Pass on an item."
+		info.tooltipText = L["Allow all group members to roll Need, Greed, Disenchant, or Pass on an item."]
 	else
-		info.tooltipText = "Allow all group members to roll Need, Greed, or Pass on an item."
+		info.tooltipText = L["Allow all group members to roll Need, Greed, or Pass on an item."]
 	end
 	UIDropDownMenu_AddButton(info, level);
 end
@@ -1152,9 +1153,9 @@ end
 -------------------------------------------------------------------------------
 
 local happinessTypes = {
-	[1] = { name = "Unhappy", desc = "Your pet is unhappy." },
-	[2] = { name = "Content", desc = "Your pet is contented, but not really happy." },
-	[3] = { name = "Happy", desc = "Your pet is perfectly happy with you and the world." },
+	[1] = { name = L["Unhappy"], desc = L["Your pet is unhappy."] },                                              
+	[2] = { name = L["Content"], desc = L["Your pet is contented, but not really happy."] },                       
+	[3] = { name = L["Happy"],   desc = L["Your pet is perfectly happy with you and the world."] },                
 }
 
 function Me.PetEditor_UpdateHappiness()
@@ -1163,29 +1164,29 @@ function Me.PetEditor_UpdateHappiness()
 	local tooltipDesc = "";
 	if Profile.pet.isHungry then
 		happiness = happiness - 1;
-		tooltipDesc = tooltipDesc .. "|n|cFFFFFFFFHungry|r|nYour pet is hungry and requires food!|n";
+		tooltipDesc = tooltipDesc .. L["|n|cFFFFFFFFHungry|r|nYour pet is hungry and requires food!|n"];
 	end
 	if Profile.pet.isStinky then
 		happiness = happiness - 1;
-		tooltipDesc = tooltipDesc .. "|n|cFFFFFFFFStinky|r|nYour pet is filthy and needs a bath!|n";
+		tooltipDesc = tooltipDesc .. L["|n|cFFFFFFFFStinky|r|nYour pet is filthy and needs a bath!|n"];
 	end
 	if Profile.pet.isTired then
 		happiness = happiness - 1;
-		tooltipDesc = tooltipDesc .. "|n|cFFFFFFFFSleepy|r|nYour pet is exhausted and requires rest!|n";
+		tooltipDesc = tooltipDesc .. L["|n|cFFFFFFFFSleepy|r|nYour pet is exhausted and requires rest!|n"];
 	end
 	if Profile.pet.isDirty then
 		happiness = happiness - 1;
-		tooltipDesc = tooltipDesc .. "|n|cFFFFFFFFDirty|r|nYour pet stables could use a good cleaning!|n";
+		tooltipDesc = tooltipDesc .. L["|n|cFFFFFFFFDirty|r|nYour pet stables could use a good cleaning!|n"];
 		DiceMasterPetModelFlies:Show();
 	else
 		DiceMasterPetModelFlies:Hide();
 	end
 	if Profile.pet.isCold then
 		happiness = happiness - 1;
-		tooltipDesc = tooltipDesc .. "|n|cFFFFFFFFCold|r|nYour pet needs warmth in order to hatch!|n";
+		tooltipDesc = tooltipDesc .. L["|n|cFFFFFFFFCold|r|nYour pet needs warmth in order to hatch!|n"];
 	end
 	if Profile.pet.name then
-		tooltipDesc = tooltipDesc:gsub( "Your pet", Profile.pet.name );
+		tooltipDesc = tooltipDesc:gsub( L["Your pet"], Profile.pet.name );
 	end
 	DiceMasterPetFrame.petHappiness.tooltipDesc = tooltipDesc;
 	happiness = Me.Clamp( happiness, 1, 3);
@@ -1375,7 +1376,7 @@ function Me.PetEditor_FeedPet( item )
 	end
 	
 	if not found then
-		UIErrorsFrame:AddMessage( "Your pet doesn't like that food.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Your pet doesn't like that food."], 1.0, 0.0, 0.0 );
 		return
 	end
 	
@@ -1631,7 +1632,7 @@ function Me.SkillFrame_IncreaseButton_OnClick( self, button )
 			Me.Profile.skills[skillPosition].rank = Me.Clamp( Me.Profile.skills[skillPosition].rank + 1, -9999, 9999 )
 		end
 	else
-		UIErrorsFrame:AddMessage( "You can't do that.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["You can't do that."], 1.0, 0.0, 0.0 );
 	end
 	Me.SkillFrame_UpdateSkills()
 end
@@ -1766,7 +1767,7 @@ function Me.SkillFrame_CreateDefaults()
 	
 	Me.SkillFrame_UpdateSkills();
 	DiceMasterTraitEditor.NoSkillsWarning:Hide();
-	Me.PrintMessage( "|cFF8080ffYou have gained ".. #Profile.skills .." new skills.|r", "SYSTEM" )
+		Me.PrintMessage( L["|cFF8080ffYou have gained %d new skills.|r"]:format( #Profile.skills ), "SYSTEM" )   -- >>> l10n esES
 end
 
 function Me.SkillFrame_CreateWoWJdR()
@@ -1918,7 +1919,7 @@ function Me.SkillFrame_ExportSheet()
 	sheet = TableToString( sheet );
 	sheet = Me.Encrypt( sheet );
 	
-	DiceMasterExportDialog.titleText = "Export Skills";
+	DiceMasterExportDialog.titleText = L["Export Skills"];
 	DiceMasterExportDialog:Show();
 	DiceMasterExportDialog.ExclusionControl:Show();
 	DiceMasterExportDialog.ImportControl.InputContainer.EditBox:SetText( sheet );
@@ -1932,7 +1933,7 @@ function Me.SkillFrame_ImportSheet()
 	local text = DiceMasterImportDialog.ImportControl.InputContainer.EditBox:GetText();
 	
 	if not text or text == nil or text == "" then
-		UIErrorsFrame:AddMessage( "Invalid import code.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Invalid import code."], 1.0, 0.0, 0.0 );
 		return
 	end
 	
@@ -1946,18 +1947,18 @@ function Me.SkillFrame_ImportSheet()
 		if backup then
 			Profile.skills = backup;
 		end
-		UIErrorsFrame:AddMessage( "Invalid import code. 2", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["Invalid import code. 2"], 1.0, 0.0, 0.0 );
 		return 
 	end
 	
 	Profile.skills = T;
 	if #Profile.skills > 10 then
-		Me.PrintMessage( "|cFF8080ffYou have gained ".. #Profile.skills .." new skills.|r", "SYSTEM" );
+			Me.PrintMessage( L["|cFF8080ffYou have gained %d new skills.|r"]:format( #Profile.skills ), "SYSTEM" )
 	else
 		for i = 1, #Profile.skills do
 			local skill = Profile.skills[i];
 			if skill.name and not( skill.type == "header" ) then
-				Me.PrintMessage( "|cFF8080ffYou have gained the ".. skill.name .." skill.|r", "SYSTEM" );
+				Me.PrintMessage( L["|cFF8080ffYou have gained the %s skill.|r"]:format( skill.name ), "SYSTEM" );
 			end
 		end
 	end
@@ -1970,32 +1971,32 @@ end
 
 function Me.SkillFrameTemplate_OnLoad(frame, level, menuList)
 	local info = UIDropDownMenu_CreateInfo();
-	info.text = "Plantilla de habilidades";
+	info.text = L["Skill Templates"];
 	info.isTitle = true;
 	info.notClickable = true;
 	info.notCheckable = true;
 	UIDropDownMenu_AddButton(info);
-	info.text = "Plantilla por defecto";
-	info.tooltipTitle = "Default";
-	info.tooltipText = "La planyilla estandar de atributos, habilidades y tiradas de salvación.";
+	info.text = L["Default Template"];
+	info.tooltipTitle = L["Default"];
+	info.tooltipText = L["The standard template of attributes, skills, and saving throws."];
 	info.tooltipOnButton = true;
 	info.isTitle = false;
 	info.notClickable = false;
 	info.func = Me.SkillFrame_CreateDefaults;
 	info.disabled = false;
 	UIDropDownMenu_AddButton(info);
-	info.text = "Plantilla WoW JdR";
-	info.tooltipTitle = "WoW JdR";
-	info.tooltipText = "La planyilla de WoW JdR de atributos, habilidades y tiradas de salvación.";
+	info.text = L["WoW JdR Template"];
+	info.tooltipTitle = L["WoW JdR"];
+	info.tooltipText = L["The WoW JdR template of attributes, skills, and saving throws."];
 	info.tooltipOnButton = true;
 	info.isTitle = false;
 	info.notClickable = false;
 	info.func = Me.SkillFrame_CreateWoWJdR;
 	info.disabled = false;
 	UIDropDownMenu_AddButton(info);
-	info.text = CreateAtlasMarkup("editmode-new-layout-plus") .. " |cFF00FF00Importar|r";
-	info.tooltipTitle = CreateAtlasMarkup("editmode-new-layout-plus") .. " |cFF00FF00Importar|r";
-	info.tooltipText = "Usa un código apara importar una planilla hecha por otro jugador.";
+	info.text = CreateAtlasMarkup("editmode-new-layout-plus") .. " |cFF00FF00" .. L["Import"] .. "|r";
+	info.tooltipTitle = CreateAtlasMarkup("editmode-new-layout-plus") .. " |cFF00FF00" .. L["Import"] .. "|r";
+	info.tooltipText = L["Use a code to import a sheet made by another player."];
 	info.arg1 = 0;
 	info.value = 0;
 	info.notCheckable = true;
@@ -2010,9 +2011,9 @@ function Me.SkillFrameAlignment_OnClick( alignment )
 end
 
 function Me.SkillFrameAlignment_SetUp( self )
-	self:SetDefaultText( "Alineamientos" );
+	self:SetDefaultText( L["Alignments"] );
 	self:SetupMenu(function(dropdown, rootDescription)
-		rootDescription:CreateTitle( "Alineamientos" );
+		rootDescription:CreateTitle( L["Alignments"] );
 		for k, v in pairs( Me.AlignmentList ) do
 			local alignmentType = rootDescription:CreateButton(k, nil);
 			alignmentType:AddInitializer(function(button, description, menu)
@@ -2027,7 +2028,7 @@ function Me.SkillFrameAlignment_SetUp( self )
 				end);
 				entryButton:SetTooltip(function(tooltip, elementDescription)
 					GameTooltip_SetTitle(tooltip, MenuUtil.GetElementText(elementDescription));
-					local descText = alignment.desc .. "|n|nEjemplos: |cFFFFFFFF" .. alignment.examples[1];
+					local descText = alignment.desc .. L["|n|nExamples: |cFFFFFFFF"] .. alignment.examples[1];
 					for example = 2, #alignment.examples do
 						descText = descText .. ", " .. alignment.examples[example];
 					end
@@ -2035,12 +2036,12 @@ function Me.SkillFrameAlignment_SetUp( self )
 				end);
 			end
 		end
-		local lastButton = rootDescription:CreateRadio( "(Sin Alineamiento)", function()
-			return Me.Profile.alignment == "(Sin Alineamiento)";
-		end, function() Me.SkillFrameAlignment_OnClick( "(Sin Alineamiento)" ) end);
+		local lastButton = rootDescription:CreateRadio( L["(No Alignment)"], function()
+			return Me.Profile.alignment == "(No Alignment)";
+		end, function() Me.SkillFrameAlignment_OnClick( "(No Alignment)" ) end);
 		lastButton:SetTooltip(function(tooltip, elementDescription)
 			GameTooltip_SetTitle(tooltip, MenuUtil.GetElementText(elementDescription));
-			GameTooltip_AddNormalLine(tooltip, "Este personaje no tiene alineamiento.");
+			GameTooltip_AddNormalLine(tooltip, L["This character has no alignment."]);
 		end);
 	end);
 end
@@ -2164,7 +2165,7 @@ function Me.SkillFrame_SetStatusBar( statusBarID, skillIndex, numSkills )
 		expandedDescription = expandedDescription .. " = " .. coloredSkillRank .. " / " .. skillMaxRank .. " )|r";
 		
 		if ( skillMaxRank == 0) then
-			skillDescription = "|cFFFFFFFFRank " .. coloredSkillRank .. "|r|n" .. skillDescription;
+			skillDescription = L["|cFFFFFFFFRank "] .. coloredSkillRank .. "|r|n" .. skillDescription;
 		else
 			skillDescription = skillDescription .. "|n|cFFFFFFFF( " .. coloredSkillRank .. " / " .. skillMaxRank .. " )|r";
 		end
@@ -2326,12 +2327,11 @@ function Me.SkillDetailFrame_SetStatusBar( skillPosition )
 				color = GREEN_FONT_COLOR_CODE.."+"
 			end
 			if tonumber( modifier.rank ) ~= 0 then
-				-- Add an extra line if it's the first skill
 				if i == 1 then
 					if not( skillDescription ) then
-						skillDescription = "|cFFFFD100Modifiers:|r "
+						skillDescription = L["|cFFFFD100Modifiers:|r "]
 					else
-						skillDescription = skillDescription .. "|n|n|cFFFFD100Modifiers:|r "
+						skillDescription = skillDescription .. "|n|n" .. L["|cFFFFD100Modifiers:|r "]
 					end
 				end
 				if i == #skillModifiers then
@@ -2343,16 +2343,15 @@ function Me.SkillDetailFrame_SetStatusBar( skillPosition )
 		end
 	end
 	if ( skillDescription and skillAuthor ) then
-		DiceMasterSkillDetailDescriptionText:SetText(skillDescription .. "|n|n|cFFFFD100Creator:|r "..skillAuthor.."|n");
+		DiceMasterSkillDetailDescriptionText:SetText(skillDescription .. "|n|n" .. L["|cFFFFD100Creator:|r "] .. skillAuthor .. "|n");
 		DiceMasterSkillDetailDescriptionText:Show();
 	elseif skillAuthor then
-		DiceMasterSkillDetailDescriptionText:SetText("|cFFFFD100Creator:|r "..skillAuthor.."|n");
+		DiceMasterSkillDetailDescriptionText:SetText( L["|cFFFFD100Creator:|r "] .. skillAuthor .. "|n");
 		DiceMasterSkillDetailDescriptionText:Show();
 	else
 		DiceMasterSkillDetailDescriptionText:SetText("");
 		DiceMasterSkillDetailDescriptionText:Hide();
-	end
-	
+	end	
 	-- Default width
 	skillRankFrameWidth = 256;
 
@@ -2563,19 +2562,19 @@ function Me.TraitEditor_TermsOnLoad(frame, level, menuList)
 		info.hasArrow = true;
 		info.keepShownOnClick = true;
 		info.menuList = 1;
-		info.text = "Effects";
+		info.text = L["Effects"];
 		UIDropDownMenu_AddButton(info, level);
 		info.menuList = 2;
-		info.text = "Combat Actions";
+		info.text = L["Combat Actions"];
 		UIDropDownMenu_AddButton(info, level);
 		info.menuList = 3;
-		info.text = "Conditions";
+		info.text = L["Conditions"];
 		UIDropDownMenu_AddButton(info, level);
 		info.menuList = 4;
-		info.text = "Skills";
+		info.text = L["Skills"];
 		UIDropDownMenu_AddButton(info, level);
 		info.menuList = 5;
-		info.text = "Saving Throws";
+		info.text = L["Saving Throws"];
 		UIDropDownMenu_AddButton(info, level);
 		info.isTitle = false;
 		info.func = Me.TraitEditor_TermsOnClick;
@@ -2667,37 +2666,37 @@ function Me.TraitEditor_EffectsOnLoad(frame, level, menuList)
 	info.notCheckable = false;
 	info.func = Me.TraitEditor_EffectsOnClick;
 	info.icon = "Interface/Icons/Spell_Holy_WordFortitude"
-	info.text = "Apply Buff"
+	info.text = L["Apply Buff"]
 	info.checked = effects["buff"] and effects["buff"].name and effects["buff"].name ~= "";
 	info.arg1 = Me.BuffEditor_Open;
 	UIDropDownMenu_AddButton(info, level)
 	info.icon = "Interface/Icons/Spell_Shadow_SacrificialShield"
-	info.text = "Remove Buff"
+	info.text = L["Remove Buff"]
 	info.checked = effects["removebuff"] and effects["removebuff"].name and effects["removebuff"].name ~= "";
 	info.arg1 = Me.RemoveBuffEditor_Open;
 	UIDropDownMenu_AddButton(info, level)
 	info.icon = "Interface/Icons/inv_misc_drum_01"
-	info.text = "Play Sound"
+	info.text = L["Play Sound"]
 	info.checked = effects["sound"] and effects["sound"].soundID ~= nil;
 	info.arg1 = Me.SoundPicker_Open;
 	UIDropDownMenu_AddButton(info, level)
 	info.icon = "Interface/Icons/INV_Misc_Dice_01"
-	info.text = "Roll Dice"
+	info.text = L["Roll Dice"]
 	info.checked = effects["setdice"] and effects["setdice"].value;
 	info.arg1 = Me.SetDiceEditor_Open;
 	UIDropDownMenu_AddButton(info, level)
 	info.icon = "Interface/Icons/spell_arcane_blast"
-	info.text = "Visual Effect"
+	info.text = L["Visual Effect"]
 	info.checked = effects["effect"] and effects["effect"].effectID;
 	info.arg1 = Me.EffectPicker_Open;
 	UIDropDownMenu_AddButton(info, level)
 	info.icon = "Interface/Icons/inv_scroll_03"
-	info.text = "Run Script"
+	info.text = L["Run Script"]
 	info.arg1 = Me.ScriptEditor_Open;
 	info.checked = effects["script"] and effects["script"].code;
 	UIDropDownMenu_AddButton(info, level)
 	info.icon = "Interface/AddOns/DiceMaster/Icons/Secret"
-	info.text = "Secret"
+	info.text = L["Secret"]
 	info.checked = effects["secret"] and ( effects["secret"].conditions1 or effects["secret"].conditions2 or effects["secret"].conditions3 );
 	info.arg1 = Me.SecretEditor_Open;
 	UIDropDownMenu_AddButton(info, level)
@@ -2841,7 +2840,7 @@ function Me.TraitEditor_Refresh()
 	scrollFrame.traitUsage.text:SetText( Me.FormatUsage( trait.usage ) )
 	scrollFrame.traitUsage:SetWidth(scrollFrame.traitUsage.text:GetStringWidth())
 	
-	if not ( trait.usage == "PASIVO" ) then
+	if not ( trait.usage == "PASSIVE" ) then
 		scrollFrame.traitRange.text:SetText( Me.FormatRange( trait.range ) )
 		scrollFrame.traitRange:SetWidth(scrollFrame.traitRange.text:GetStringWidth())
 		scrollFrame.traitCastTime.text:SetText( Me.FormatCastTime( trait.castTime ) )
@@ -2955,7 +2954,7 @@ function Me.TraitEditor_ChangeUsage( button )
 	
 	trait.usage = Me.TRAIT_USAGE_MODES[usage_index]
 	
-	if trait.usage == "PASIVO" then
+	if trait.usage == "PASSIVE" then
 		Me.editor.scrollFrame.Container.traitRange:Hide()
 		Me.editor.scrollFrame.Container.traitCastTime:Hide()
 		Me.editor.scrollFrame.Container.traitCooldown:Hide()
@@ -3176,7 +3175,7 @@ function Me.TraitEditor_Open()
 	
 	Me.editor.PortraitContainer.portrait:SetTexture( "Interface/AddOns/DiceMaster/Texture/TraitFrameIcon" )
 	
-	Me.editor.TitleContainer.TitleText:SetText( "Rasgos" )
+	Me.editor.TitleContainer.TitleText:SetText( L["Traits"] )
 	
 	Me.editor.CloseButton:SetScript("OnClick",Me.TraitEditor_OnCloseClicked)
    

@@ -47,7 +47,7 @@ local GUILDS_ALLOWED = {
 -- Trait.usage modes.
 --
 local TRAIT_USAGE_MODES = {
-	"USE1", "USE2", "USE3", "PASIVO", "MANA1", "MANA2", "MANA3", "MANA4", "MANA5", "MANA6", "MANA7", "MANA8", "MANA9", "MANA10",
+	"USE1", "USE2", "USE3", "PASSIVE", "MANA1", "MANA2", "MANA3", "MANA4", "MANA5", "MANA6", "MANA7", "MANA8", "MANA9", "MANA10",
 	"CHARGE1", "CHARGE2", "CHARGE3", "CHARGE4", "CHARGE5", "CHARGE6", "CHARGE7", "CHARGE8", "CHARGE9", "CHARGE10", "NONE"
 }
 
@@ -1072,7 +1072,7 @@ end
 local function updateMana( traitButton )
 	local traitIndex = traitButton.traitIndex
 	local trait = Profile.traits[ traitIndex ]
-	local usage = trait.usage or "PASIVO";
+	local usage = trait.usage or "PASSIVE";
 	
 	if usage:find("MANA") then
 		local manaSpent = usage:gsub("MANA", "")

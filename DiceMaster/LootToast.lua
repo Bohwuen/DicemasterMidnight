@@ -13,9 +13,16 @@ local groupLootItems = {}
 local groupLootItemsRecipient = {}
 
 local ITEM_BIND_TYPES = {
-	"Binds when picked up",
-	"Binds when equipped",
-	"Binds when used",
+	L["Binds when picked up"],
+	L["Binds when equipped"],
+	L["Binds when used"],
+}
+
+local ROLL_TYPE_NAMES = {
+	Need       = L["Need"],
+	Greed      = L["Greed"],
+	Disenchant = L["Disenchant"],
+	Pass       = L["Pass"],
 }
 
 local DICEMASTER_LOOT_BORDERS = {
@@ -42,7 +49,7 @@ function Me.LootToastFrame_OnEnter( self )
 	GameTooltip:AddLine( self.itemData.name, color.r, color.g, color.b, true )
 	
 	if self.itemData.soulbound then
-		GameTooltip:AddLine( "Binds when picked up", 1, 1, 1, true)
+		GameTooltip:AddLine( L["Binds when picked up"], 1, 1, 1, true)
 	elseif self.itemData.itemBind and self.itemData.itemBind > 0 then
 		GameTooltip:AddLine( ITEM_BIND_TYPES[ self.itemData.itemBind ], 1, 1, 1, true )
 	end
@@ -64,7 +71,7 @@ function Me.LootToastFrame_OnEnter( self )
 	end
 	
 	if self.itemData.author then
-		GameTooltip:AddLine( "<Made by " .. self.itemData.author .. ">", 0, 1, 0, true)
+		GameTooltip:AddLine( L["<Made by %s>"]:format( self.itemData.author ), 0, 1, 0, true)
 	end
 	
 	GameTooltip:Show();
@@ -209,7 +216,7 @@ function Me.NewRecipeLearnedAlertFrame_SetUp(recipeID)
 		self.Icon:SetMask("Interface\\CharacterFrame\\TempPortraitAlphaMask");
 		self.Icon:SetTexture(Me.Profile.recipes[recipeID].item.icon);
 
-		self.Title:SetText("New Recipe Learned!");
+		self.Title:SetText( L["New Recipe Learned!"] );
 		self.Name:SetText(recipeName);
 
 		self.recipeID = recipeID;
@@ -243,7 +250,7 @@ end
 local function CanRollNeedOnLoot( itemData )
 
 	if #Profile.inventory >= 42 then
-		return false, "Inventory is full."
+		return false, L["Inventory is full."]
 	end
 	
 	return true
@@ -252,7 +259,7 @@ end
 local function CanRollGreedOnLoot( itemData )
 
 	if #Profile.inventory >= 42 then
-		return false, "Inventory is full."
+		return false, L["Inventory is full."]
 	end
 	
 	return true
@@ -264,7 +271,7 @@ local function CanRollDisenchantOnLoot( itemData )
 		return true;
 	end
 	
-	return false, "Item cannot be disenchanted";
+	return false, L["Item cannot be disenchanted"];
 end
 
 function Me.GroupLootContainer_OnLoad(self)
@@ -446,17 +453,17 @@ end
 function Me.GroupLootFrame_GroupLoot( item, button )
 	
 	if not Me.IsLeader( true ) then
-		UIErrorsFrame:AddMessage( "You must be the group leader or a raid assistant to distribute items.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["You must be the group leader or a raid assistant to distribute items."], 1.0, 0.0, 0.0 );
 		return
 	end
 	
 	if groupLootItems[ item.guid ] then
-		UIErrorsFrame:AddMessage( "You are already dispensing that item.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["You are already dispensing that item."], 1.0, 0.0, 0.0 );
 		return
 	end
 	
 	if GetNumActiveGroupLootFrames() >= 4 then
-		UIErrorsFrame:AddMessage( "You can only distribute four items at a time.", 1.0, 0.0, 0.0 );
+		UIErrorsFrame:AddMessage( L["You can only distribute four items at a time."], 1.0, 0.0, 0.0 );
 		return
 	end
 	
@@ -498,9 +505,9 @@ function Me.GroupLootFrame_Roll( self, rollType )
 	end	
 	
 	if rollType == "Pass" then
-		Me.PrintMessage( "|cFF00aa00[Loot]: You passed on: " .. itemLink, "SYSTEM" )
+		Me.PrintMessage( L["|cFF00aa00[Loot]: You passed on: %s"]:format( itemLink ), "SYSTEM" )
 	else
-		Me.PrintMessage( "|cFF00aa00[Loot]: You have selected " .. rollType .. " for: " .. itemLink, "SYSTEM" )
+		Me.PrintMessage( L["|cFF00aa00[Loot]: You have selected %s for: %s"]:format( rollType, itemLink ), "SYSTEM" )
 	end
 	
 	local msg = Me:Serialize( "ITEMROLL", {
@@ -608,8 +615,8 @@ function Me.LootToast_OnToast( data, dist, sender )
 	
 	local toastText
 	if not( data.labelText ) then
-		toastText = "You receive item:"
-	else
+		toastText = L["You receive item:"]
+		else
 		toastText = data.labelText .. ":"
 	end
 	
@@ -667,11 +674,11 @@ function Me.LootToast_OnGroupLootMessage( data, dist, sender )
 	end
 	
 	if data.ro == "Pass" then
-		Me.PrintMessage( "|cFF00aa00[Loot]: Everyone passed on: " .. itemLink, "SYSTEM" )
+		Me.PrintMessage( L["|cFF00aa00[Loot]: Everyone passed on: %s"]:format( itemLink ), "SYSTEM" )
 		groupLootItems[ data.guid ] = nil
 		Me.TraitEditor_UpdateInventory()
 	elseif data.wi and playerName == UnitName("player") then
-		Me.PrintMessage( "|cFF00aa00[Loot]: You (" .. rollType .. " - " .. roll .. ") Won: " .. itemLink, "SYSTEM" )
+		Me.PrintMessage( L["|cFF00aa00[Loot]: You (%s - %d) Won: %s"]:format( ROLL_TYPE_NAMES[rollType] or rollType, roll, itemLink ), "SYSTEM" )
 		
 		if groupLootItemsRecipient[ data.guid ] then
 			
@@ -691,7 +698,7 @@ function Me.LootToast_OnGroupLootMessage( data, dist, sender )
 					if item then
 						Me.CreateItem( item, data.amount )
 					else
-						UIErrorsFrame:AddMessage( "Error producing item.", 1.0, 0.0, 0.0 );
+						UIErrorsFrame:AddMessage( L["Error producing item."], 1.0, 0.0, 0.0 );
 						return
 					end
 				end
@@ -704,17 +711,17 @@ function Me.LootToast_OnGroupLootMessage( data, dist, sender )
 			groupLootItemsRecipient[ data.guid ] = nil;
 		end
 	elseif data.wi then
-		Me.PrintMessage( "|cFF00aa00[Loot]: " .. playerName .. " (" .. rollType .. " - " .. roll .. ") Won: " .. itemLink, "SYSTEM" )
-		Me.PrintMessage( "|cFF00aa00[Loot]: " .. playerName .. " receives loot: " .. itemLink, "SYSTEM" )
+		Me.PrintMessage( L["|cFF00aa00[Loot]: %s (%s - %d) Won: %s"]:format( playerName, ROLL_TYPE_NAMES[rollType] or rollType, roll, itemLink ), "SYSTEM" )
+		Me.PrintMessage( L["|cFF00aa00[Loot]: %s receives loot: %s"]:format( playerName, itemLink ), "SYSTEM" )
 	elseif playerName == UnitName("player") then
 		if rollType ~= "Pass" then
-			Me.PrintMessage( "|cFF00aa00[Loot]: You have rolled " .. rollType .. " - " .. roll .. " for: " .. itemLink, "SYSTEM" )
+			Me.PrintMessage( L["|cFF00aa00[Loot]: You have rolled %s - %d for: %s"]:format( ROLL_TYPE_NAMES[rollType] or rollType, roll, itemLink ), "SYSTEM" )
 		end
 	else
 		if rollType == "Pass" then
-			Me.PrintMessage( "|cFF00aa00[Loot]: " .. playerName .. " passed on: " .. itemLink, "SYSTEM" )
+			Me.PrintMessage( L["|cFF00aa00[Loot]: %s passed on: %s"]:format( playerName, itemLink ), "SYSTEM" )
 		else
-			Me.PrintMessage( "|cFF00aa00[Loot]: " .. playerName .. " rolled " .. rollType .. " - " .. roll .. " for: " .. itemLink, "SYSTEM" )
+			Me.PrintMessage( L["|cFF00aa00[Loot]: %s rolled %s - %d for: %s"]:format( playerName, ROLL_TYPE_NAMES[rollType] or rollType, roll, itemLink ), "SYSTEM" )
 		end
 	end
 	
@@ -819,7 +826,7 @@ function Me.LootToast_OnMasterLootMessage( data, dist, sender )
 			if item then
 				Me.CreateItem( item, data.amount )
 			else
-				UIErrorsFrame:AddMessage( "Error producing item.", 1.0, 0.0, 0.0 );
+				UIErrorsFrame:AddMessage( L["Error producing item."], 1.0, 0.0, 0.0 );
 				return
 			end
 		end
@@ -828,6 +835,6 @@ function Me.LootToast_OnMasterLootMessage( data, dist, sender )
 		local msg = Me:Serialize( "ITEM", item );
 		Me:SendCommMessage( "DCM4", msg, "WHISPER", UnitName("player"), "ALERT" )
 	elseif data.wi then
-		Me.PrintMessage( "|cFF00aa00" .. playerName .. " receives loot: " .. itemLink, "SYSTEM" )
+		Me.PrintMessage( L["|cFF00aa00%s receives loot: %s"]:format( playerName, itemLink ), "SYSTEM" )
 	end
 end

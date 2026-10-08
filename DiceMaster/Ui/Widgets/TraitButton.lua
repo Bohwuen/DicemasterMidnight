@@ -105,7 +105,7 @@ function Me.OpenTraitTooltip( owner, trait, index )
 			range = nil
 		end
 		
-		if usage and usage ~= "PASIVO" and range then
+		if usage and usage ~= "PASSIVE" and range then
 			local range = Me.FormatRange( trait.range )
 			GameTooltip:AddDoubleLine( usage, range, 1, 1, 1, 1, 1, 1, true )
 		elseif range and not ( usage ) then
@@ -114,7 +114,7 @@ function Me.OpenTraitTooltip( owner, trait, index )
 			GameTooltip:AddDoubleLine( usage, nil, 1, 1, 1, 1, 1, 1, true )
 		end
 		
-		if trait.usage and usage ~= "PASIVO" and trait.castTime then
+		if trait.usage and usage ~= "PASSIVE" and trait.castTime then
 			local castTime = Me.FormatCastTime( trait.castTime )
 			if trait.cooldown and trait.cooldown ~= "NONE" then
 				local cooldown = Me.FormatCooldown( trait.cooldown )
@@ -324,7 +324,7 @@ local methods = {
 			self.icon:SetTexture( Me.inspectData[self.traitPlayer].traits[self.traitIndex].icon )
 			if self:GetParent() == DiceMasterChargesFrame then
 				if Me.db.global.showUses then
-					local usage = Me.inspectData[self.traitPlayer].traits[self.traitIndex].usage or "PASIVO"
+					local usage = Me.inspectData[self.traitPlayer].traits[self.traitIndex].usage or "PASSIVE"
 					if usage:find("USO") then
 						local uses = usage:gsub( "USO", "" )
 						self.count:SetText( uses )

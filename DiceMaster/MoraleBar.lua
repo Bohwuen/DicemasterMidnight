@@ -40,7 +40,7 @@ function Me.MoraleBar_OnEnter( self )
 	GameTooltip:SetText(self.powerName, 1, 1, 1);
 	GameTooltip:AddLine(self.powerTooltip, nil, nil, nil, true);
 	if Me.IsLeader( true ) then
-		GameTooltip:AddLine("|cFF707070<Click Izquierdo/Derecho para Añadir /Eliminar "..self.powerName..">")
+		GameTooltip:AddLine( L["|cFF707070<Left/Right Click to Add/Remove %s>"]:format( self.powerName ) )
 	end
 	GameTooltip:Show();
 	self.text:SetText(self.powerName.." "..self.displayedValue.."%")

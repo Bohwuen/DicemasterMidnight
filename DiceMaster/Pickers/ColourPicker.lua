@@ -8,40 +8,43 @@
 
 local Me = DiceMaster4
 
+-- >>> l10n esES
+-- Claves de categoría ("Default", "Class", "Quality") NO se traducen
+-- (son claves internas de menú). El texto visible se traduce al mostrarlo.
 local PRESET_COLOUR_OPTIONS = {
 	["Default"] = {
-		{ "Red", "FF0000" },
-		{ "Orange", "FFA500" },
-		{ "Yellow", "FFFF00" },
-		{ "Green", "00FF00" },
-		{ "Blue", "0000FF" },
-		{ "Purple", "FF00FF" },
-		{ "White", "FFFFFF" },
-		{ "Black", "000000" },
+		{ L["Red"],    "FF0000" },
+		{ L["Orange"], "FFA500" },
+		{ L["Yellow"], "FFFF00" },
+		{ L["Green"],  "00FF00" },
+		{ L["Blue"],   "0000FF" },
+		{ L["Purple"], "FF00FF" },
+		{ L["White"],  "FFFFFF" },
+		{ L["Black"],  "000000" },
 	},
 	["Class"] = {
-		{ "Death Knight", "C41F3B" },
-		{ "Demon Hunter", "A330C9" },
-		{ "Druid", "FF7D0A" },
-		{ "Hunter", "ABD473" },
-		{ "Mage", "40C7EB" },
-		{ "Monk", "00FF96" },
-		{ "Paladin", "F58CBA" },
-		{ "Priest", "FFFFFF" },
-		{ "Rogue", "FFF569" },
-		{ "Shaman", "0070DE" },
-		{ "Warlock", "8787ED" },
-		{ "Warrior", "C79C6E" },
+		{ L["Death Knight"], "C41F3B" },
+		{ L["Demon Hunter"], "A330C9" },
+		{ L["Druid"],        "FF7D0A" },
+		{ L["Hunter"],       "ABD473" },
+		{ L["Mage"],         "40C7EB" },
+		{ L["Monk"],         "00FF96" },
+		{ L["Paladin"],      "F58CBA" },
+		{ L["Priest"],       "FFFFFF" },
+		{ L["Rogue"],        "FFF569" },
+		{ L["Shaman"],       "0070DE" },
+		{ L["Warlock"],      "8787ED" },
+		{ L["Warrior"],      "C79C6E" },
 	},
 	["Quality"] = {
-		{ "Poor", "9D9D9D" },
-		{ "Common", "FFFFFF" },
-		{ "Uncommon", "1EFF00" },
-		{ "Rare", "0070DD" },
-		{ "Epic", "A335EE" },
-		{ "Legendary", "FF8000" },
-		{ "Artifact", "E6CC80" },
-		{ "Heirloom", "00CCFF" },
+		{ L["Poor"],      "9D9D9D" },
+		{ L["Common"],    "FFFFFF" },
+		{ L["Uncommon"],  "1EFF00" },
+		{ L["Rare"],      "0070DD" },
+		{ L["Epic"],      "A335EE" },
+		{ L["Legendary"], "FF8000" },
+		{ L["Artifact"],  "E6CC80" },
+		{ L["Heirloom"],  "00CCFF" },
 	},
 }
 
@@ -82,7 +85,7 @@ function Me.ColourPickerDropDown_OnLoad(frame, level, menuList)
 	
 	if level == 1 then
 		for k,v in pairs( PRESET_COLOUR_OPTIONS ) do
-			info.text = k
+			info.text = L[k]
 			info.disabled = false;
 			info.notClickable = false;
 			info.notCheckable = true;
@@ -111,7 +114,7 @@ end
 function Me.ColourPicker_OnColourSelect( r, g, b )
 	local hex = RGBToHex( r, g, b )
 	DiceMasterColourPicker.value:SetText( CreateColor( r, g, b, 1 ):WrapTextInColorCode( strupper( hex ) ) )
-	UIDropDownMenu_SetText(DiceMasterColourPicker.selectPreset, "Select a Preset Colour")
+	UIDropDownMenu_SetText(DiceMasterColourPicker.selectPreset, L["Select a Preset Colour"])
 end
 
 -------------------------------------------------------------------------------
@@ -120,7 +123,7 @@ end
 function Me.ColourPicker_OnTextChanged( self )
 	local r, g, b = HexToRGBPerc( self:GetText() or "" )
 	DiceMasterColourPicker.colourSelect:SetColorRGB( r, g, b )
-	UIDropDownMenu_SetText(DiceMasterColourPicker.selectPreset, "Select a Preset Colour")
+	UIDropDownMenu_SetText(DiceMasterColourPicker.selectPreset, L["Select a Preset Colour"])
 end
 
 -------------------------------------------------------------------------------
