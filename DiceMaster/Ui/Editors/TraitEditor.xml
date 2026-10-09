@@ -1709,12 +1709,12 @@
 					<OnClick>
 						DiceMaster4.SkillFrame_ExportSheet()
 					</OnClick>
-					<OnEnter>
-						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip_SetTitle(GameTooltip, "Export", HIGHLIGHT_FONT_COLOR);
-						GameTooltip_AddNormalLine(GameTooltip, "Create an import code to share your skills with other players.", true);
-						GameTooltip:Show();
-					</OnEnter>
+						<OnEnter>
+							GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+							GameTooltip_SetTitle(GameTooltip, L["Export"], HIGHLIGHT_FONT_COLOR);
+							GameTooltip_AddNormalLine(GameTooltip, L["Create an import code to share your skills with other players."], true);
+							GameTooltip:Show();
+						</OnEnter>
 					<OnLeave function="GameTooltip_Hide"/>
 				</Scripts>
 			</Button>
@@ -2906,20 +2906,23 @@
 		</Scripts>
 	  </Frame>
 	  
-	  <Button name="$parentTab1" parentKey="Tab1" useParentLevel="true" inherits="PanelTabButtonTemplate" id="1" text="Rasgos">
+		<Button name="$parentTab1" parentKey="Tab1" useParentLevel="true" inherits="PanelTabButtonTemplate" id="1">
 			<Anchors>
 				<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" x="11" y="2"/>
 			</Anchors>
 			<Scripts>
+				<OnLoad>
+					self:SetText(L["Traits"])
+				</OnLoad>
 				<OnClick>
 					DiceMaster4.editor.Inset:SetPoint("BOTTOMLEFT", 4, 40)
 					DiceMaster4.editor.Bg:SetPoint("BOTTOMRIGHT", -6, 40)
 					DiceMaster4.editor.Inset:Show();
 					DiceMaster4.editor.Bg:Show()
 					PanelTemplates_SetTab(DiceMaster4.editor, 1);
-                    DiceMasterTraitsFrame:Show();
+					DiceMasterTraitsFrame:Show();
 					DiceMasterTraitEditor.PortraitContainer.portrait:SetTexture( "Interface/AddOns/DiceMaster/Texture/TraitFrameIcon" )
-					DiceMasterTraitEditorTitleText:SetText("Rasgos");
+					DiceMasterTraitEditorTitleText:SetText(L["Traits"]);
 					DiceMasterTraitEditor.NoSkillsWarning:Hide()
 					DiceMasterTraitEditor.FormatBar:Show();
 					for i = 1,5 do
@@ -2939,70 +2942,76 @@
 			</Scripts>
 		</Button>
 		
-	  <Button name="$parentTab2" parentKey="Tab2" useParentLevel="true" inherits="PanelTabButtonTemplate" id="2" text="Habilidades">
-		<Anchors>
-			<Anchor point="TOPLEFT" relativeKey="$parent.Tab1" relativePoint="TOPRIGHT" x="1"/>
-		</Anchors>
-		<Scripts>
-			<OnClick>
-				DiceMaster4.editor.Inset:SetPoint("BOTTOMLEFT", 4, 26)
-				DiceMaster4.editor.Bg:SetPoint("BOTTOMRIGHT", -6, 26)
-				DiceMaster4.editor.Inset:Show();
-				DiceMaster4.editor.Bg:Hide()
-				PanelTemplates_SetTab(DiceMaster4.editor, 2);
-				DiceMasterTraitsFrame:Hide();
-				DiceMasterTraitEditor.PortraitContainer.portrait:SetTexture( "Interface/AddOns/DiceMaster/Texture/SkillsFrameIcon" )
-				DiceMasterTraitEditorTitleText:SetText("Habilidades");
-				DiceMasterTraitEditor.FormatBar:Hide();
-				for i = 1,5 do
-					DiceMaster4.editor.trait_buttons[i]:Hide();
-				end
-				DiceMasterPetFrame:Hide();
-				DiceMasterSkillFrame:Show();
-				DiceMasterTraitEditorInventoryFrame:Hide()
-				DiceMasterTraitEditorInventoryTab:SetChecked( false )
-				DiceMasterTraitEditorShopFrame:Hide()
-				DiceMasterTraitEditorShopTab:SetChecked( false )									
-				DiceMasterTraitEditorBankFrame:Hide()
-				DiceMasterTraitEditorBankTab:SetChecked( false )
-				PlaySound(841)
-				DiceMaster4.TraitEditor_OnTabChanged()
-			</OnClick>
-		</Scripts>
-	  </Button>
+		<Button name="$parentTab2" parentKey="Tab2" useParentLevel="true" inherits="PanelTabButtonTemplate" id="2">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.Tab1" relativePoint="TOPRIGHT" x="1"/>
+			</Anchors>
+			<Scripts>
+				<OnLoad>
+					self:SetText(L["Skills"])
+				</OnLoad>
+				<OnClick>
+					DiceMaster4.editor.Inset:SetPoint("BOTTOMLEFT", 4, 26)
+					DiceMaster4.editor.Bg:SetPoint("BOTTOMRIGHT", -6, 26)
+					DiceMaster4.editor.Inset:Show();
+					DiceMaster4.editor.Bg:Hide()
+					PanelTemplates_SetTab(DiceMaster4.editor, 2);
+					DiceMasterTraitsFrame:Hide();
+					DiceMasterTraitEditor.PortraitContainer.portrait:SetTexture( "Interface/AddOns/DiceMaster/Texture/SkillsFrameIcon" )
+					DiceMasterTraitEditorTitleText:SetText(L["Skills"]);
+					DiceMasterTraitEditor.FormatBar:Hide();
+					for i = 1,5 do
+						DiceMaster4.editor.trait_buttons[i]:Hide();
+					end
+					DiceMasterPetFrame:Hide();
+					DiceMasterSkillFrame:Show();
+					DiceMasterTraitEditorInventoryFrame:Hide()
+					DiceMasterTraitEditorInventoryTab:SetChecked( false )
+					DiceMasterTraitEditorShopFrame:Hide()
+					DiceMasterTraitEditorShopTab:SetChecked( false )									
+					DiceMasterTraitEditorBankFrame:Hide()
+					DiceMasterTraitEditorBankTab:SetChecked( false )
+					PlaySound(841)
+					DiceMaster4.TraitEditor_OnTabChanged()
+				</OnClick>
+			</Scripts>
+		</Button>
 	  
-	  <Button name="$parentTab3" parentKey="Tab3" useParentLevel="true" inherits="PanelTabButtonTemplate" id="3" text="Mascota">
-		<Anchors>
-			<Anchor point="TOPLEFT" relativeKey="$parent.Tab2" relativePoint="TOPRIGHT" x="1"/>
-		</Anchors>
-		<Scripts>
-			<OnClick>
-				DiceMaster4.editor.Inset:SetPoint("BOTTOMLEFT", 4, 26)
-				DiceMaster4.editor.Bg:SetPoint("BOTTOMRIGHT", -6, 26)
-				DiceMaster4.editor.Inset:Show();
-				DiceMaster4.editor.Bg:Show()
-				DiceMasterTraitEditor.PortraitContainer.portrait:SetTexture( "Interface/AddOns/DiceMaster/Texture/PetFrameIcon" )
-				DiceMasterTraitEditorTitleText:SetText("Pet");
-				PanelTemplates_SetTab(DiceMaster4.editor, 3);
-				DiceMasterTraitsFrame:Hide();
-				DiceMasterTraitEditor.NoSkillsWarning:Hide()
-				DiceMasterTraitEditor.FormatBar:Hide();
-				for i = 1,5 do
-					DiceMaster4.editor.trait_buttons[i]:Hide();
-				end
-				DiceMasterPetFrame:Show();
-				DiceMasterSkillFrame:Hide();
-				DiceMasterTraitEditorInventoryFrame:Hide()
-				DiceMasterTraitEditorInventoryTab:SetChecked( false )
-				DiceMasterTraitEditorShopFrame:Hide()
-				DiceMasterTraitEditorShopTab:SetChecked( false )									
-				DiceMasterTraitEditorBankFrame:Hide()
-				DiceMasterTraitEditorBankTab:SetChecked( false )
-				PlaySound(841)
-				DiceMaster4.TraitEditor_OnTabChanged()
-			</OnClick>
-		</Scripts>
-	  </Button>
+		<Button name="$parentTab3" parentKey="Tab3" useParentLevel="true" inherits="PanelTabButtonTemplate" id="3">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.Tab2" relativePoint="TOPRIGHT" x="1"/>
+			</Anchors>
+			<Scripts>
+				<OnLoad>
+					self:SetText(L["Pet"])
+				</OnLoad>
+				<OnClick>
+					DiceMaster4.editor.Inset:SetPoint("BOTTOMLEFT", 4, 26)
+					DiceMaster4.editor.Bg:SetPoint("BOTTOMRIGHT", -6, 26)
+					DiceMaster4.editor.Inset:Show();
+					DiceMaster4.editor.Bg:Show()
+					DiceMasterTraitEditor.PortraitContainer.portrait:SetTexture( "Interface/AddOns/DiceMaster/Texture/PetFrameIcon" )
+					DiceMasterTraitEditorTitleText:SetText(L["Pet"]);
+					PanelTemplates_SetTab(DiceMaster4.editor, 3);
+					DiceMasterTraitsFrame:Hide();
+					DiceMasterTraitEditor.NoSkillsWarning:Hide()
+					DiceMasterTraitEditor.FormatBar:Hide();
+					for i = 1,5 do
+						DiceMaster4.editor.trait_buttons[i]:Hide();
+					end
+					DiceMasterPetFrame:Show();
+					DiceMasterSkillFrame:Hide();
+					DiceMasterTraitEditorInventoryFrame:Hide()
+					DiceMasterTraitEditorInventoryTab:SetChecked( false )
+					DiceMasterTraitEditorShopFrame:Hide()
+					DiceMasterTraitEditorShopTab:SetChecked( false )									
+					DiceMasterTraitEditorBankFrame:Hide()
+					DiceMasterTraitEditorBankTab:SetChecked( false )
+					PlaySound(841)
+					DiceMaster4.TraitEditor_OnTabChanged()
+				</OnClick>
+			</Scripts>
+		</Button>
 	  
 	  <CheckButton name="$parentInventoryTab" frameLevel="510">
 		<Size x="32" y="32"/>
@@ -3038,7 +3047,7 @@
 					DiceMaster4.editor.Inset:Hide();
 					DiceMaster4.editor.Bg:Hide();
 					DiceMasterTraitsFrame:Hide();
-					DiceMasterTraitEditorTitleText:SetText("Inventory");
+					DiceMasterTraitEditorTitleText:SetText(L["Inventory"]);
 					DiceMasterTraitEditor.NoSkillsWarning:Hide()
 					DiceMasterTraitEditor.FormatBar:Hide();
 					for i = 1,5 do
@@ -3060,8 +3069,8 @@
 			</OnClick>
 			<OnEnter>
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-				GameTooltip:SetText( "Inventory" );
-				GameTooltip:AddLine( "&lt;Click derecho para cambiar el ícono&gt;", 0.44, 0.44, 0.44, true )
+				GameTooltip:SetText( L["Inventory"] );
+				GameTooltip:AddLine( L["&lt;Right-click to change the icon&gt;"], 0.44, 0.44, 0.44, true )
 				GameTooltip:Show();
 			</OnEnter>
 			<OnLeave>
@@ -3107,7 +3116,7 @@
 					DiceMaster4.editor.Inset:Hide();
 					DiceMaster4.editor.Bg:Hide();
 					DiceMasterTraitsFrame:Hide();
-					DiceMasterTraitEditorTitleText:SetText("Shop");
+					DiceMasterTraitEditorTitleText:SetText(L["Shop"]);
 					DiceMasterTraitEditor.NoSkillsWarning:Hide()
 					DiceMasterTraitEditor.FormatBar:Hide();
 					for i = 1,5 do
@@ -3129,8 +3138,8 @@
 			</OnClick>
 			<OnEnter>
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-				GameTooltip:SetText( DiceMaster4.Profile.shopName or "Shop" );
-				GameTooltip:AddLine( "&lt;Click derecho para cambiar el ícono&gt;", 0.44, 0.44, 0.44, true )
+				GameTooltip:SetText( DiceMaster4.Profile.shopName or L["Shop"] );
+				GameTooltip:AddLine( L["&lt;Right-click to change the icon&gt;"], 0.44, 0.44, 0.44, true )
 				GameTooltip:Show();
 			</OnEnter>
 			<OnLeave>
@@ -3176,7 +3185,7 @@
 					DiceMaster4.editor.Inset:Hide();
 					DiceMaster4.editor.Bg:Hide();
 					DiceMasterTraitsFrame:Hide();
-					DiceMasterTraitEditorTitleText:SetText("Bank");
+					DiceMasterTraitEditorTitleText:SetText(L["Bank"]);
 					DiceMasterTraitEditor.NoSkillsWarning:Hide()
 					DiceMasterTraitEditor.FormatBar:Hide();
 					for i = 1,5 do
@@ -3195,7 +3204,7 @@
 			</OnClick>
 			<OnEnter>
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-				GameTooltip:SetText( "Bank" );
+				GameTooltip:SetText( L["Bank"] );
 				GameTooltip:Show();
 			</OnEnter>
 			<OnLeave>
@@ -3220,8 +3229,8 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "Clear";
-					self.tooltipText = "Reset this trait to default.";
+					self.tooltipTitle = L["Clear"];
+					self.tooltipText = L["Reset this trait to default."];
 					self.icon:SetTexCoord( 0.25, 0.5, 0, 0.25 );
 				</OnLoad>
 				<OnClick>
@@ -3236,9 +3245,9 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "Color";
-					self.tooltipText = "Insert a text color tag.";
-					self.tooltipTip = "The color tag uses this format:|n|n|cFF808080&lt;color=|cFFFF0000RR|r|cFF00FF00GG|r|cFF0000FFBB|r>|rtext|cFF808080&lt;/color>|r|n|nEach pair of digits represents a color value as a hexidecimal number."
+					self.tooltipTitle = L["Color"];
+					self.tooltipText = L["Insert a text color tag."];
+					self.tooltipTip = L["The color tag uses this format:|n|n|cFF808080&lt;color=|cFFFF0000RR|r|cFF00FF00GG|r|cFF0000FFBB|r&gt;|rtext|cFF808080&lt;/color&gt;|r|n|nEach pair of digits represents a color value as a hexidecimal number."]
 					self.icon:SetTexCoord( 0, 0.25, 0, 0.25 );
 				</OnLoad>
 				<OnClick>
@@ -3254,9 +3263,9 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "Image";
-					self.tooltipText = "Insert an inline icon tag.";
-					self.tooltipTip = "The image tag uses this format:|n|n|cFF808080&lt;img>|rpath|cFF808080&lt;/img>|r|n|nThe path provided must be the full file name of the image."
+					self.tooltipTitle = L["Image"];
+					self.tooltipText = L["Insert an inline icon tag."];
+					self.tooltipTip = L["The image tag uses this format:|n|n|cFF808080&lt;img&gt;|rpath|cFF808080&lt;/img&gt;|r|n|nThe path provided must be the full file name of the image."]
 					self.icon:SetTexCoord( 0.5, 0.75, 0, 0.25 )
 				</OnLoad>
 				<OnClick>
@@ -3272,12 +3281,12 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "List";
-					self.tooltipText = "Insert a bulleted list.";
+					self.tooltipTitle = L["List"];
+					self.tooltipText = L["Insert a bulleted list."];
 					self.icon:SetTexCoord( 0, 0.25, 0.25, 0.5 )
 				</OnLoad>
 				<OnClick>
-					DiceMaster4.TraitEditor_Insert( "|n&lt;*> Item 1|n&lt;*> Item 2|n&lt;*> Item 3" )
+					DiceMaster4.TraitEditor_Insert( L["|n&lt;*> Item 1|n&lt;*> Item 2|n&lt;*> Item 3"] )
 					DiceMaster4.TraitEditor_SaveDescription()
 				</OnClick>
 			</Scripts>
@@ -3289,12 +3298,12 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "Rule";
-					self.tooltipText = "Insert a horizontal line rule.";
+					self.tooltipTitle = L["Rule"];
+					self.tooltipText = L["Insert a horizontal line rule."];
 					self.icon:SetTexCoord( 0.75, 1, 0, 0.25 )
 				</OnLoad>
 				<OnClick>
-					DiceMaster4.TraitEditor_Insert( "&lt;rule>|n" )
+					DiceMaster4.TraitEditor_Insert( "&lt;rule&gt;|n" )
 					DiceMaster4.TraitEditor_SaveDescription()
 				</OnClick>
 			</Scripts>
@@ -3306,9 +3315,9 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "DiceMaster Term";
-					self.tooltipText = "Insert an official DiceMaster term.";
-					self.tooltipTip = "DiceMaster terms wrapped in |cFF808080&lt;>|r brackets will display their definitions next to the tooltip for players with Enhanced Tooltips enabled."
+					self.tooltipTitle = L["DiceMaster Term"];
+					self.tooltipText = L["Insert an official DiceMaster term."];
+					self.tooltipTip = L["DiceMaster terms wrapped in |cFF808080&lt;&gt;|r brackets will display their definitions next to the tooltip for players with Enhanced Tooltips enabled."]
 					self.icon:SetTexCoord( 0.5, 0.75, 0.5, 0.75 )
 				</OnLoad>
 				<OnClick>
@@ -3329,8 +3338,8 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "Health Icon";
-					self.tooltipText = "Insert a health icon.";
+					self.tooltipTitle = L["Health Icon"];
+					self.tooltipText = L["Insert a health icon."];
 					self.icon:SetTexCoord( 0.5, 0.75, 0.25, 0.5 )
 				</OnLoad>
 				<OnClick>
@@ -3346,8 +3355,8 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "Armor Icon";
-					self.tooltipText = "Insert an armor icon.";
+					self.tooltipTitle = L["Armor Icon"];
+					self.tooltipText = L["Insert an armor icon."];
 					self.icon:SetTexCoord( 0.25, 0.5, 0.25, 0.5 )
 				</OnLoad>
 				<OnClick>
@@ -3363,8 +3372,8 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = CreateAtlasMarkup("editmode-new-layout-plus") .. " |cFF00FF00Import|r";
-					self.tooltipText = "Use a code to import a trait made by another player.";
+					self.tooltipTitle = CreateAtlasMarkup("editmode-new-layout-plus") .. " |cFF00FF00" .. L["Import"] .. "|r";
+					self.tooltipText = L["Use a code to import a trait made by another player."];
 					self.icon:SetTexCoord( 0, 0.25, 0.5, 0.75 )
 				</OnLoad>
 				<OnClick>
@@ -3379,8 +3388,8 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					self.tooltipTitle = "Export";
-					self.tooltipText = "Create an import code to share this trait with other players.";
+					self.tooltipTitle = L["Export"];
+					self.tooltipText = L["Create an import code to share this trait with other players."];
 					self.icon:SetTexCoord( 0.25, 0.5, 0.5, 0.75 )
 				</OnLoad>
 				<OnClick>
@@ -3395,7 +3404,7 @@
 			</Anchors>
 			<Scripts>
 				<OnLoad>
-					DiceMaster4.SetupTooltip( self, nil, "|cFFFFD100Click to edit this trait's effects." )
+					DiceMaster4.SetupTooltip( self, nil, L["|cFFFFD100Click to edit this trait's effects."] )
 					self.icon:SetTexCoord( 0.75, 1, 0.25, 0.5 )
 				</OnLoad>
 				<OnClick>
